@@ -8,6 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SignInForm } from "@/components/SignInForm";
+import { Separator } from "@/components/ui/separator";
+import { SignInWithGithub } from "@/components/SignInWithGithub";
 
 export default function SignInPage() {
   return (
@@ -19,7 +21,9 @@ export default function SignInPage() {
             アカウントにログインして続行してください
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
+          <SignInWithGithub />
+          <SeparatorWithLabel label="または" />
           <SignInForm />
         </CardContent>
         <CardFooter className="flex justify-center">
@@ -32,6 +36,19 @@ export default function SignInPage() {
           </p>
         </CardFooter>
       </Card>
+    </div>
+  );
+}
+
+function SeparatorWithLabel({ label }: { label: string }) {
+  return (
+    <div className="relative my-4">
+      <Separator />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="bg-background px-2 text-xs uppercase text-muted-foreground">
+          {label}
+        </span>
+      </div>
     </div>
   );
 }
