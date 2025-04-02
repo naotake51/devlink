@@ -41,3 +41,20 @@ export const signInWithGithub = actionClient.action(async () => {
 
   return redirect(data.url);
 });
+
+export const signInWithGmail = actionClient.action(async () => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    return { failure: error.message };
+  }
+
+  return redirect(data.url);
+});

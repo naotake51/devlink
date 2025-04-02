@@ -10,6 +10,7 @@ import {
 import { SignInForm } from "@/components/SignInForm";
 import { Separator } from "@/components/ui/separator";
 import { SignInWithGithub } from "@/components/SignInWithGithub";
+import { SignInWithGmail } from "@/components/SignInWithGmail";
 
 export default function SignInPage() {
   return (
@@ -23,6 +24,7 @@ export default function SignInPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <SignInWithGithub />
+          <SignInWithGmail />
           <SeparatorWithLabel label="または" />
           <SignInForm />
         </CardContent>
