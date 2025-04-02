@@ -1,25 +1,37 @@
-import { signup } from "./actions";
 import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { SignUpForm } from "@/components/SignUpForm";
 
 export default function SignUpPage() {
   return (
-    <div>
-      <h1>新規登録</h1>
-      <form>
-        <div>
-          <label htmlFor="email">メールアドレス:</label>
-          <input id="email" name="email" type="email" required />
-        </div>
-        <div>
-          <label htmlFor="password">パスワード:</label>
-          <input id="password" name="password" type="password" required />
-        </div>
-        <button formAction={signup}>登録する</button>
-      </form>
-      <p>
-        すでにアカウントをお持ちの方は<Link href="/sign-in">ログイン</Link>
-        してください。
-      </p>
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold">アカウント作成</CardTitle>
+          <CardDescription>
+            以下の情報を入力して新しいアカウントを作成してください
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SignUpForm />
+        </CardContent>
+        <CardFooter className="flex justify-center">
+          <p className="text-sm text-muted-foreground">
+            すでにアカウントをお持ちの方は
+            <Link href="/sign-in" className="ml-1 text-primary hover:underline">
+              ログイン
+            </Link>
+            してください。
+          </p>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
