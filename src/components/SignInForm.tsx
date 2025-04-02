@@ -16,8 +16,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useAction } from "next-safe-action/hooks";
+import { useState } from "react";
 
 export function SignInForm() {
+  const [message, setMessage] = useState<string | null>(null);
+
+  const { execute, status } = useAction(signIn, {
+    onSuccess: ({ data }) => {
+      if (data?.failure) {
+        setMessage(data.failure);
+      }
+    },
+    onError: ({ error }) => {
+      if (error.serverError) {
+        setMessage("システムエラー");
+      } else if (error.validationErrors) {
+        setMessage("入力内容を確認してください。");
+      }
+    },
+  });
+
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -27,15 +46,13 @@ export function SignInForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    const formData = new FormData();
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    await signIn(formData);
+    execute(values);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {message && <div className="text-destructive">{message}</div>}
         <FormField
           control={form.control}
           name="email"
@@ -67,8 +84,12 @@ export function SignInForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          ログイン
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={status === "executing"}
+        >
+          {status === "executing" ? "ログイン中..." : "ログイン"}
         </Button>
       </form>
     </Form>

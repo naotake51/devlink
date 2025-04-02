@@ -15,8 +15,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useAction } from "next-safe-action/hooks";
+import { useState } from "react";
 
 export function SignUpForm() {
+  const [message, setMessage] = useState<string | null>(null);
+
+  const { execute, status } = useAction(signup, {
+    onSuccess: ({ data }) => {
+      if (data?.failure) {
+        setMessage(data.failure);
+      }
+    },
+    onError: ({ error }) => {
+      if (error.serverError) {
+        setMessage("システムエラー");
+      } else if (error.validationErrors) {
+        setMessage("入力内容を確認してください。");
+      }
+    },
+  });
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -26,15 +45,13 @@ export function SignUpForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
-    const formData = new FormData();
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    await signup(formData);
+    execute(values);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {message && <div className="text-destructive">{message}</div>}
         <FormField
           control={form.control}
           name="email"
@@ -57,15 +74,16 @@ export function SignUpForm() {
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
-              <p className="text-xs text-muted-foreground">
-                パスワードは8文字以上で、大文字、小文字、数字、特殊文字を含める必要があります
-              </p>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          登録する
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={status === "executing"}
+        >
+          {status === "executing" ? "登録中..." : "登録する"}
         </Button>
       </form>
     </Form>

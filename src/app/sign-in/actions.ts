@@ -2,36 +2,25 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
 import { createClient } from "@/utils/supabase/server";
 import { signInSchema } from "./schema";
+import { actionClient } from "@/lib/safe-action";
 
-export async function signIn(formData: FormData) {
-  const supabase = await createClient();
+export const signIn = actionClient
+  .schema(signInSchema)
+  .action(async ({ parsedInput }) => {
+    const { email, password } = parsedInput;
+    const supabase = await createClient();
 
-  const email = formData.get("email");
-  const password = formData.get("password");
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  const result = signInSchema.safeParse({
-    email,
-    password,
+    if (error) {
+      return { failure: error.message };
+    }
+
+    revalidatePath("/", "layout");
+    redirect("/");
   });
-
-  if (!result.success) {
-    console.error("バリデーションエラー:", result.error.errors);
-    redirect("/error");
-  }
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email: result.data.email,
-    password: result.data.password,
-  });
-
-  if (error) {
-    console.error("認証エラー:", error.message);
-    redirect("/error");
-  }
-
-  revalidatePath("/", "layout");
-  redirect("/");
-}
