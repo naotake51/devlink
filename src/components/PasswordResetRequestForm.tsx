@@ -1,11 +1,10 @@
 "use client";
 
-import { signIn } from "@/app/sign-in/actions";
-import Link from "next/link";
+import { requestPasswordReset } from "@/app/password-reset/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signInSchema } from "@/app/sign-in/schema";
+import { passwordResetRequestSchema } from "@/app/password-reset/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,14 +17,20 @@ import {
 } from "@/components/ui/form";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
+import Link from "next/link";
 
-export function SignInForm() {
+export function PasswordResetRequestForm() {
   const [message, setMessage] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const { execute, status } = useAction(signIn, {
+  const { execute, status } = useAction(requestPasswordReset, {
     onSuccess: ({ data }) => {
       if (data?.failure) {
         setMessage(data.failure);
+        setIsSuccess(false);
+      } else if (data?.success) {
+        setMessage(data.success);
+        setIsSuccess(true);
       }
     },
     onError: ({ error }) => {
@@ -34,25 +39,31 @@ export function SignInForm() {
       } else if (error.validationErrors) {
         setMessage("入力内容を確認してください。");
       }
+      setIsSuccess(false);
     },
   });
 
-  const form = useForm<z.infer<typeof signInSchema>>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<z.infer<typeof passwordResetRequestSchema>>({
+    resolver: zodResolver(passwordResetRequestSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof passwordResetRequestSchema>,
+  ) => {
     execute(values);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {message && <div className="text-destructive">{message}</div>}
+        {message && (
+          <div className={isSuccess ? "text-green-600" : "text-destructive"}>
+            {message}
+          </div>
+        )}
         <FormField
           control={form.control}
           name="email"
@@ -66,34 +77,23 @@ export function SignInForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center justify-between">
-                <FormLabel>パスワード</FormLabel>
-                <Link
-                  href="/password-reset/request"
-                  className="text-sm text-primary hover:underline"
-                >
-                  パスワードをお忘れですか？
-                </Link>
-              </div>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <Button
           type="submit"
           className="w-full"
-          disabled={status === "executing"}
+          disabled={status === "executing" || isSuccess}
         >
-          {status === "executing" ? "ログイン中..." : "ログイン"}
+          {status === "executing"
+            ? "送信中..."
+            : "パスワードリセットメールを送信"}
         </Button>
+        <div className="text-center mt-4">
+          <Link
+            href="/sign-in"
+            className="text-sm text-primary hover:underline"
+          >
+            サインインに戻る
+          </Link>
+        </div>
       </form>
     </Form>
   );
