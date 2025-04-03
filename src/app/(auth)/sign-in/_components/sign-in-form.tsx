@@ -1,11 +1,11 @@
 "use client";
 
-import { signIn } from "@/app/sign-in/actions";
+import { signIn } from "../actions";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signInSchema } from "@/app/sign-in/schema";
+import { signInSchema } from "../schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

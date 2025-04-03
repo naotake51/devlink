@@ -1,10 +1,10 @@
 "use client";
 
-import { resetPassword } from "@/app/password-reset/actions";
+import { resetPassword } from "../actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { passwordResetSchema } from "@/app/password-reset/schema";
+import { passwordResetSchema } from "../schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

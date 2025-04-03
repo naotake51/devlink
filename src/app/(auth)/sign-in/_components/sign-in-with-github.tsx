@@ -1,15 +1,15 @@
 "use client";
 
-import { signInWithGmail } from "@/app/sign-in/actions";
+import { signInWithGithub } from "../actions";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
 
-export function SignInWithGmail() {
+export function SignInWithGithub() {
   const [message, setMessage] = useState<string | null>(null);
 
-  const { execute, status } = useAction(signInWithGmail, {
+  const { execute, status } = useAction(signInWithGithub, {
     onSuccess: ({ data }) => {
       if (data?.failure) {
         setMessage(data.failure);
@@ -35,13 +35,13 @@ export function SignInWithGmail() {
         onClick={handleSignIn}
       >
         <Image
-          src="/gmail.svg"
-          alt="Gmail"
+          src="/github.svg"
+          alt="Github"
           className="mr-2 h-4 w-4"
           width={16}
           height={16}
         />
-        {status === "executing" ? "Gmailでログイン中..." : "Gmailでログイン"}
+        {status === "executing" ? "Githubでログイン中..." : "Githubでログイン"}
       </Button>
     </>
   );

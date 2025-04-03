@@ -1,4 +1,4 @@
-import { PasswordResetRequestForm } from "@/components/PasswordResetRequestForm";
+import { PasswordResetRequestForm } from "./_components/password-reset-request-form";
 import {
   Card,
   CardContent,

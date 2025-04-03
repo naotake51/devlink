@@ -1,10 +1,10 @@
 "use client";
 
-import { requestPasswordReset } from "@/app/password-reset/actions";
+import { signup } from "../actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { passwordResetRequestSchema } from "@/app/password-reset/schema";
+import { signUpSchema } from "../schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,13 +17,12 @@ import {
 } from "@/components/ui/form";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
-import Link from "next/link";
 
-export function PasswordResetRequestForm() {
+export function SignUpForm() {
   const [message, setMessage] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { execute, status } = useAction(requestPasswordReset, {
+  const { execute, status } = useAction(signup, {
     onSuccess: ({ data }) => {
       if (data?.failure) {
         setMessage(data.failure);
@@ -43,16 +42,15 @@ export function PasswordResetRequestForm() {
     },
   });
 
-  const form = useForm<z.infer<typeof passwordResetRequestSchema>>({
-    resolver: zodResolver(passwordResetRequestSchema),
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
-  const onSubmit = async (
-    values: z.infer<typeof passwordResetRequestSchema>,
-  ) => {
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     execute(values);
   };
 
@@ -77,23 +75,26 @@ export function PasswordResetRequestForm() {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>パスワード</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button
           type="submit"
           className="w-full"
           disabled={status === "executing" || isSuccess}
         >
-          {status === "executing"
-            ? "送信中..."
-            : "パスワードリセットメールを送信"}
+          {status === "executing" ? "登録中..." : "登録する"}
         </Button>
-        <div className="text-center mt-4">
-          <Link
-            href="/sign-in"
-            className="text-sm text-primary hover:underline"
-          >
-            サインインに戻る
-          </Link>
-        </div>
       </form>
     </Form>
   );

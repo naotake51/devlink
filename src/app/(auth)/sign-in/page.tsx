@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { SignInForm } from "@/components/SignInForm";
 import { Separator } from "@/components/ui/separator";
-import { SignInWithGithub } from "@/components/SignInWithGithub";
-import { SignInWithGmail } from "@/components/SignInWithGmail";
+import { SignInForm } from "./_components/sign-in-form";
+import { SignInWithGithub } from "./_components/sign-in-with-github";
+import { SignInWithGmail } from "./_components/sign-in-with-gmail";
 
 export default function SignInPage() {
   return (
