@@ -1,3 +1,4 @@
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,27 +10,10 @@ import {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* ヘッダーナビゲーション */}
-      <header className="py-4 px-4 border-b">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <div className="font-bold text-xl">DevLink</div>
-          <div className="flex gap-4">
-            <Button variant="outline" asChild>
-              <a href="/sign-in">ログイン</a>
-            </Button>
-            <Button asChild>
-              <a href="/sign-up">新規登録</a>
-            </Button>
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* ヒーローセクション */}
       <section className="flex flex-col items-center justify-center px-4 py-16 text-center bg-gradient-to-b from-primary/5 to-background">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-4">
-          DevLink
-        </h1>
+        <Logo size="lg" className="mb-4" />
         <p className="text-xl md:text-2xl font-medium text-muted-foreground mb-6">
           スキルも熱量も違う仲間がつながる、協業のはじまり
         </p>
@@ -276,7 +260,7 @@ export default function Home() {
             DevLinkが目指す協業文化
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            <Card className="border-t-4 border-t-primary">
+            <Card>
               <CardHeader>
                 <CardTitle>ゆるく始めて、しっかり報いる</CardTitle>
               </CardHeader>
@@ -286,7 +270,7 @@ export default function Home() {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="border-t-4 border-t-primary">
+            <Card>
               <CardHeader>
                 <CardTitle>初期参加者を大切にする</CardTitle>
               </CardHeader>
@@ -296,7 +280,7 @@ export default function Home() {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="border-t-4 border-t-primary">
+            <Card>
               <CardHeader>
                 <CardTitle>ミスマッチは自然に解消</CardTitle>
               </CardHeader>
@@ -306,7 +290,7 @@ export default function Home() {
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="border-t-4 border-t-primary">
+            <Card>
               <CardHeader>
                 <CardTitle>安心とフェアさの両立</CardTitle>
               </CardHeader>
@@ -370,6 +354,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

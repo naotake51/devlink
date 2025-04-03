@@ -11,7 +11,7 @@ import { SignUpForm } from "./_components/sign-up-form";
 
 export default function SignUpPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="w-full max-w-md p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">アカウント作成</CardTitle>
