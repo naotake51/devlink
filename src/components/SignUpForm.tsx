@@ -20,11 +20,16 @@ import { useState } from "react";
 
 export function SignUpForm() {
   const [message, setMessage] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const { execute, status } = useAction(signup, {
     onSuccess: ({ data }) => {
       if (data?.failure) {
         setMessage(data.failure);
+        setIsSuccess(false);
+      } else if (data?.success) {
+        setMessage(data.success);
+        setIsSuccess(true);
       }
     },
     onError: ({ error }) => {
@@ -33,6 +38,7 @@ export function SignUpForm() {
       } else if (error.validationErrors) {
         setMessage("入力内容を確認してください。");
       }
+      setIsSuccess(false);
     },
   });
 
@@ -51,7 +57,11 @@ export function SignUpForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {message && <div className="text-destructive">{message}</div>}
+        {message && (
+          <div className={isSuccess ? "text-green-600" : "text-destructive"}>
+            {message}
+          </div>
+        )}
         <FormField
           control={form.control}
           name="email"
@@ -81,7 +91,7 @@ export function SignUpForm() {
         <Button
           type="submit"
           className="w-full"
-          disabled={status === "executing"}
+          disabled={status === "executing" || isSuccess}
         >
           {status === "executing" ? "登録中..." : "登録する"}
         </Button>
