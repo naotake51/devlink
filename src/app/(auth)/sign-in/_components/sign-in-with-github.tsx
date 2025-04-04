@@ -1,10 +1,10 @@
 "use client";
 
-import { signInWithGithub } from "../actions";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAction } from "next-safe-action/hooks";
+import Image from "next/image";
 import { useState } from "react";
+import { signInWithGithub } from "../actions";
 
 export function SignInWithGithub() {
   const [message, setMessage] = useState<string | null>(null);

@@ -1,4 +1,3 @@
-import "server-only";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import "server-only";
 
 export default function Home() {
   return (

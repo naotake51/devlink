@@ -1,5 +1,5 @@
-import "server-only";
 import { NextResponse } from "next/server";
+import "server-only";
 // The client you created from the Server-Side Auth instructions
 import { createClient } from "@/utils/supabase/server";
 

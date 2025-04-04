@@ -1,9 +1,9 @@
 "use server";
 
-import "server-only";
-import { createClient } from "@/utils/supabase/server";
-import { signUpSchema } from "./schema";
 import { actionClient } from "@/lib/safe-action";
+import { createClient } from "@/utils/supabase/server";
+import "server-only";
+import { signUpSchema } from "./schema";
 
 export const signup = actionClient
   .schema(signUpSchema)

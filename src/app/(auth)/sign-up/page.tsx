@@ -1,5 +1,3 @@
-import "server-only";
-import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -8,6 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
+import "server-only";
 import { SignUpForm } from "./_components/sign-up-form";
 
 export default function SignUpPage() {

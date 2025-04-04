@@ -1,6 +1,6 @@
-import "server-only";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest } from "next/server";
+import "server-only";
 
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";

@@ -1,5 +1,3 @@
-import "server-only";
-import { PasswordResetForm } from "./_components/password-reset-form";
 import {
   Card,
   CardContent,
@@ -7,6 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import "server-only";
+import { PasswordResetForm } from "./_components/password-reset-form";
 
 export default function PasswordResetPage() {
   return (

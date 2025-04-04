@@ -1,12 +1,6 @@
 "use client";
 
-import { resetPassword } from "../actions";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { passwordResetSchema } from "../schema";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -15,8 +9,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { resetPassword } from "../actions";
+import { passwordResetSchema } from "../schema";
 
 export function PasswordResetForm() {
   const [message, setMessage] = useState<string | null>(null);

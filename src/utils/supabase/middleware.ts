@@ -1,6 +1,6 @@
-import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import "server-only";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({

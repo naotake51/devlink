@@ -1,10 +1,10 @@
 "use client";
 
-import { signInWithGmail } from "../actions";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAction } from "next-safe-action/hooks";
+import Image from "next/image";
 import { useState } from "react";
+import { signInWithGmail } from "../actions";
 
 export function SignInWithGmail() {
   const [message, setMessage] = useState<string | null>(null);
