@@ -1,3 +1,4 @@
+import "server-only";
 import { PasswordResetRequestForm } from "./_components/password-reset-request-form";
 import {
   Card,

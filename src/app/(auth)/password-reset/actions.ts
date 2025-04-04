@@ -1,5 +1,6 @@
 "use server";
 
+import "server-only";
 import { createClient } from "@/utils/supabase/server";
 import { passwordResetRequestSchema, passwordResetSchema } from "./schema";
 import { actionClient } from "@/lib/safe-action";
