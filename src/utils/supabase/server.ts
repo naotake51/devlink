@@ -1,3 +1,4 @@
+import type { Database } from "@/__generated__/database.types";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import "server-only";
@@ -5,7 +6,7 @@ import "server-only";
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient(
+  return createServerClient<Database>(
     process.env.NEXT_SUPABASE_URL!,
     process.env.NEXT_SUPABASE_ANON_KEY!,
     {
