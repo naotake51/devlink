@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+/**
+ * @package
+ */
 export const signInSchema = z.object({
   email: z.string().email({
     message: "有効なメールアドレスを入力してください。",

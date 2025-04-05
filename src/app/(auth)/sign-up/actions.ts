@@ -5,6 +5,9 @@ import { createClient } from "@/utils/supabase/server";
 import "server-only";
 import { signUpSchema } from "./schema";
 
+/**
+ * @package
+ */
 export const signup = actionClient
   .schema(signUpSchema)
   .action(async ({ parsedInput }) => {

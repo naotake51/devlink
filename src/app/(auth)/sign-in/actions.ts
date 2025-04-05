@@ -7,6 +7,9 @@ import { redirect } from "next/navigation";
 import "server-only";
 import { signInSchema } from "./schema";
 
+/**
+ * @package
+ */
 export const signIn = actionClient
   .schema(signInSchema)
   .action(async ({ parsedInput }) => {
@@ -26,6 +29,9 @@ export const signIn = actionClient
     redirect("/home");
   });
 
+/**
+ * @package
+ */
 export const signInWithGithub = actionClient.action(async () => {
   const supabase = await createClient();
 
@@ -43,6 +49,9 @@ export const signInWithGithub = actionClient.action(async () => {
   return redirect(data.url);
 });
 
+/**
+ * @package
+ */
 export const signInWithGmail = actionClient.action(async () => {
   const supabase = await createClient();
 

@@ -1,7 +1,10 @@
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 
-export default function MainLayout({
+/**
+ * @private
+ */
+export default function PublicLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

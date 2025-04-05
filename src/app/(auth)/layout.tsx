@@ -1,5 +1,8 @@
 import { Header } from "@/components/header";
 
+/**
+ * @private
+ */
 export default function AuthLayout({
   children,
 }: Readonly<{

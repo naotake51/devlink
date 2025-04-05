@@ -13,6 +13,9 @@ import { SignInForm } from "./_components/sign-in-form";
 import { SignInWithGithub } from "./_components/sign-in-with-github";
 import { SignInWithGmail } from "./_components/sign-in-with-gmail";
 
+/**
+ * @private
+ */
 export default function SignInPage() {
   return (
     <div className="w-full max-w-md p-4">

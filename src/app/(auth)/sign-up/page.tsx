@@ -10,6 +10,9 @@ import Link from "next/link";
 import "server-only";
 import { SignUpForm } from "./_components/sign-up-form";
 
+/**
+ * @private
+ */
 export default function SignUpPage() {
   return (
     <div className="w-full max-w-md p-4">

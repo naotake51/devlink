@@ -6,6 +6,9 @@ import { redirect } from "next/navigation";
 import "server-only";
 import { passwordResetRequestSchema, passwordResetSchema } from "./schema";
 
+/**
+ * @package
+ */
 export const requestPasswordReset = actionClient
   .schema(passwordResetRequestSchema)
   .action(async ({ parsedInput }) => {
@@ -26,6 +29,9 @@ export const requestPasswordReset = actionClient
     };
   });
 
+/**
+ * @package
+ */
 export const resetPassword = actionClient
   .schema(passwordResetSchema)
   .action(async ({ parsedInput }) => {

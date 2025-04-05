@@ -8,6 +8,9 @@ import {
 import "server-only";
 import { PasswordResetRequestForm } from "./_components/password-reset-request-form";
 
+/**
+ * @private
+ */
 export default function PasswordResetRequestPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-12">

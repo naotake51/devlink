@@ -12,12 +12,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * @private
+ */
 export const metadata: Metadata = {
   title: "DevLink - 開発者とデザイナーがつながる、協業のはじまり",
   description:
     "DevLinkは、個人開発者・デザイナー・プランナーが初期段階から気軽にチームを組んで協業できるプラットフォームです。",
 };
 
+/**
+ * @private
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

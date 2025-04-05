@@ -9,7 +9,10 @@ import {
 } from "@/components/ui/card";
 import "server-only";
 
-export default function Home() {
+/**
+ * @private
+ */
+export default function RootPage() {
   return (
     <>
       {/* ヒーローセクション */}

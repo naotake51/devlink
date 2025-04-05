@@ -3,6 +3,9 @@ import "server-only";
 // The client you created from the Server-Side Auth instructions
 import { createClient } from "@/utils/supabase/server";
 
+/**
+ * @private
+ */
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");

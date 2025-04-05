@@ -3,7 +3,10 @@ import "server-only";
 import { AppHeader } from "./_components/app-header";
 import { AppSidebar } from "./_components/app-sidebar";
 
-export default function MainLayout({
+/**
+ * @private
+ */
+export default function ProtectedLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
