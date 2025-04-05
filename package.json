@@ -49,11 +49,5 @@
     "supabase": "^2.20.5",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "lint-staged": {
-    "**/*": [
-      "eslint --fix",
-      "prettier --write --ignore-unknown"
-    ]
   }
 }
