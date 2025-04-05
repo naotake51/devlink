@@ -6,7 +6,7 @@ const logoVariants = cva("font-bold", {
   variants: {
     size: {
       sm: "text-lg",
-      md: "text-xl",
+      md: "text-2xl",
       lg: "text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl",
     },
   },

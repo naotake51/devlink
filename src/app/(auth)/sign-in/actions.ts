@@ -22,8 +22,8 @@ export const signIn = actionClient
       return { failure: error.message };
     }
 
-    revalidatePath("/", "layout");
-    redirect("/");
+    revalidatePath("/home", "layout");
+    redirect("/home");
   });
 
 export const signInWithGithub = actionClient.action(async () => {

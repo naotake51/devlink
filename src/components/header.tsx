@@ -7,8 +7,8 @@ export interface HeaderProps {
 
 export function Header({ children }: HeaderProps) {
   return (
-    <header className="py-4 px-4 border-b">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
+    <header className="p-4 border-b">
+      <div className="mx-auto flex justify-between items-center">
         <Logo size="md" asLink />
         {children}
       </div>
