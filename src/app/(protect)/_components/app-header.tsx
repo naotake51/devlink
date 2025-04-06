@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { ReactNode } from "react";
 import "server-only";
-import { UserAvatar } from "./user-avater";
+import { UserMenu } from "./user-menu";
 
 export interface AppHeaderProps {
   children?: ReactNode;
@@ -21,7 +21,7 @@ export async function AppHeader({ children }: AppHeaderProps) {
     <header className="py-4 px-4 border-b">
       <div className="mx-auto flex justify-between items-center">
         <div>{children}</div>
-        <UserAvatar profileId={user.id} />
+        <UserMenu userId={user.id} />
       </div>
     </header>
   );
