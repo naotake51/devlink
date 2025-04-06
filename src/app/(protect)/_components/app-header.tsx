@@ -1,15 +1,27 @@
+import { createClient } from "@/utils/supabase/server";
 import { ReactNode } from "react";
 import "server-only";
+import { UserAvatar } from "./user-avater";
 
 export interface AppHeaderProps {
   children?: ReactNode;
 }
 
-export function AppHeader({ children }: AppHeaderProps) {
+export async function AppHeader({ children }: AppHeaderProps) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
   return (
     <header className="py-4 px-4 border-b">
       <div className="mx-auto flex justify-between items-center">
-        {children}
+        <div>{children}</div>
+        <UserAvatar profileId={user.id} />
       </div>
     </header>
   );
