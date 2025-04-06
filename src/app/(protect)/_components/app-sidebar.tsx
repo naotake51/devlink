@@ -11,11 +11,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import "server-only";
 
 const menuItems = [
+  {
+    name: "マイページ",
+    url: "/my",
+    icon: () => <UserIcon />,
+  },
   {
     name: "プロジェクトを探す",
     url: "/projects",
