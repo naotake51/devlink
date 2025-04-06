@@ -2,6 +2,15 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import "server-only";
 
+const publicRoutes = [
+  "/",
+  "/sign-in",
+  "/sign-up",
+  "/password-reset/request",
+  "/auth/callback",
+  "/auth/confirm",
+];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -40,14 +49,9 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.match("/") &&
-    !request.nextUrl.pathname.match("/sign-in") &&
-    !request.nextUrl.pathname.match("/sign-up") &&
-    !request.nextUrl.pathname.match("/password-reset/request") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
+  const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname);
+
+  if (!user && !isPublicRoute) {
     // no user, potentially respond by redirecting the user to the sign-in page
     const url = request.nextUrl.clone();
     url.pathname = "/sign-in";
