@@ -11,15 +11,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { HomeIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 import "server-only";
 
 const menuItems = [
   {
-    name: "ホーム",
-    url: "/home",
-    icon: () => <HomeIcon />,
+    name: "プロジェクトを探す",
+    url: "/projects",
+    icon: () => <SearchIcon />,
   },
 ];
 
@@ -27,7 +27,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <Logo size="md" asLink href="/home" />
+        <Logo size="md" asLink href="/projects" />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

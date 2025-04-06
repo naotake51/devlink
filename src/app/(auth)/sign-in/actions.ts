@@ -25,8 +25,8 @@ export const signIn = actionClient
       return { failure: error.message };
     }
 
-    revalidatePath("/home", "layout");
-    redirect("/home");
+    revalidatePath("/projects", "layout");
+    redirect("/projects");
   });
 
 /**
