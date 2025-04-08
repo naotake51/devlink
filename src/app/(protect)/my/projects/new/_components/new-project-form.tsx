@@ -6,6 +6,7 @@ import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { MarkdownTextarea } from "@/components/markdown-textarea";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,7 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { LoaderIcon, SaveIcon } from "lucide-react";
 import { createProject } from "../actions";
 import { NewProjectSchema, type NewProjectInput } from "../schema";
@@ -93,8 +93,8 @@ export function NewProjectForm() {
                 <FormItem>
                   <FormLabel>説明</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="プロジェクトの簡単な説明を入力してください"
+                    <MarkdownTextarea
+                      placeholder="プロジェクトの簡単な説明を入力してください（Markdown）"
                       className="resize-none min-h-96"
                       {...field}
                       value={field.value ?? ""}

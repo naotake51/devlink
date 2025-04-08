@@ -1,4 +1,5 @@
 import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { Markdown } from "@/components/markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/server";
@@ -61,7 +62,7 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.created_at).toLocaleString()}
         </p>
-        <div>{project.description ?? ""}</div>
+        <Markdown content={project.description ?? ""} />
       </CardContent>
     </Card>
   );
