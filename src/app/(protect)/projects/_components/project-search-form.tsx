@@ -29,7 +29,7 @@ export function ProjectSearchForm() {
           placeholder="プロジェクト名で検索"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1"
+          className="flex-1 bg-white"
         />
         <Button type="submit" className="cursor-pointer">
           検索

@@ -14,11 +14,11 @@ export default function ProtectedLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-full">
+      <div className="flex flex-col min-h-full w-full">
         <AppHeader>
           <SidebarTrigger />
         </AppHeader>
-        <main className="p-4">{children}</main>
+        <main className="p-4 flex-1 bg-gray-50">{children}</main>
       </div>
     </SidebarProvider>
   );
