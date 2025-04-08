@@ -1,5 +1,6 @@
 "use client";
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
@@ -15,8 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"; // Assuming Textarea component exists
-import { SaveIcon } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { LoaderIcon, SaveIcon } from "lucide-react";
 import { createProject } from "../actions";
 import { NewProjectSchema, type NewProjectInput } from "../schema";
 
@@ -53,44 +54,59 @@ export function NewProjectForm() {
   const isLoading = status === "executing";
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>タイトル</FormLabel>
-              <FormControl>
-                <Input placeholder="例: 新しいWebアプリ" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>説明</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="プロジェクトの簡単な説明を入力してください"
-                  className="resize-none min-h-96"
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "作成中..." : "プロジェクトを作成"}
-          <SaveIcon />
+    <Card
+      style={{
+        viewTransitionName: `new-project`,
+      }}
+    >
+      <CardHeader className="flex items-center justify-between">
+        <CardTitle>新しいプロジェクト</CardTitle>
+        <Button type="submit" form="new-project-form" disabled={isLoading}>
+          作成
+          {isLoading ? <LoaderIcon className="animate-spin" /> : <SaveIcon />}
         </Button>
-      </form>
-    </Form>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Form {...form}>
+          <form
+            id="new-project-form"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>タイトル</FormLabel>
+                  <FormControl>
+                    <Input placeholder="例: 新しいWebアプリ" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>説明</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="プロジェクトの簡単な説明を入力してください"
+                      className="resize-none min-h-96"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
