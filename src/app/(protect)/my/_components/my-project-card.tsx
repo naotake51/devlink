@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { User } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import "server-only";
 
 export const MY_PROJECT_CARD_FIELDS = `
@@ -47,7 +48,11 @@ interface MyProjectCardProps {
  */
 export function MyProjectCard({ project }: MyProjectCardProps) {
   return (
-    <Card>
+    <Card
+      style={{
+        viewTransitionName: `project-${project.id}`,
+      }}
+    >
       <CardHeader>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>
@@ -80,8 +85,8 @@ export function MyProjectCard({ project }: MyProjectCardProps) {
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="w-full">
-          詳細を見る
+        <Button asChild variant="outline" size="sm" className="w-full">
+          <Link href={`/my/projects/${project.id}`}>詳細を見る</Link>
         </Button>
       </CardFooter>
     </Card>
