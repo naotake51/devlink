@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon, SendHorizonalIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import Link from "next/link";
 import { useState } from "react";
@@ -82,9 +83,12 @@ export function PasswordResetRequestForm() {
           className="w-full"
           disabled={status === "executing" || isSuccess}
         >
-          {status === "executing"
-            ? "送信中..."
-            : "パスワードリセットメールを送信"}
+          パスワードリセットメールを送信
+          {status === "executing" ? (
+            <LoaderIcon className="animate-spin" />
+          ) : (
+            <SendHorizonalIcon />
+          )}
         </Button>
         <div className="text-center mt-4">
           <Link

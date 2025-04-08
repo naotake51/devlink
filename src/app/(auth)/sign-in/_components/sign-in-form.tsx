@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import Link from "next/link";
 import { useState } from "react";
@@ -92,7 +93,8 @@ export function SignInForm() {
           className="w-full"
           disabled={status === "executing"}
         >
-          {status === "executing" ? "ログイン中..." : "ログイン"}
+          ログイン
+          {status === "executing" && <LoaderIcon className="animate-spin" />}
         </Button>
       </form>
     </Form>

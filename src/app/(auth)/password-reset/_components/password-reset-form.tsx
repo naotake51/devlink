@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon, SaveIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -83,7 +84,12 @@ export function PasswordResetForm() {
           className="w-full"
           disabled={status === "executing"}
         >
-          {status === "executing" ? "処理中..." : "パスワードを変更"}
+          パスワードを変更
+          {status === "executing" ? (
+            <LoaderIcon className="animate-spin" />
+          ) : (
+            <SaveIcon />
+          )}
         </Button>
       </form>
     </Form>

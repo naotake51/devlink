@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { LoaderIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import Image from "next/image";
 import { useState } from "react";
@@ -36,12 +37,13 @@ export function SignInWithGmail() {
       >
         <Image
           src="/gmail.svg"
-          alt="Gmail"
+          alt="Github"
           className="mr-2 h-4 w-4"
           width={16}
           height={16}
         />
-        {status === "executing" ? "Gmailでログイン中..." : "Gmailでログイン"}
+        Gmailでログイン
+        {status === "executing" && <LoaderIcon className="animate-spin" />}
       </Button>
     </>
   );
