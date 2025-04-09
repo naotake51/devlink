@@ -54,11 +54,7 @@ export function NewProjectForm() {
   const isLoading = status === "executing";
 
   return (
-    <Card
-      style={{
-        viewTransitionName: `new-project`,
-      }}
-    >
+    <Card>
       <CardHeader className="flex items-center justify-between">
         <CardTitle>新しいプロジェクト</CardTitle>
         <Button type="submit" form="new-project-form" disabled={isLoading}>

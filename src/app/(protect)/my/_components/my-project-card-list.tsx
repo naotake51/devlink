@@ -16,13 +16,7 @@ export async function MyProjectCardList() {
     <div>
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">作成したプロジェクト</h2>
-        <Button
-          variant="outline"
-          asChild
-          style={{
-            viewTransitionName: `new-project`,
-          }}
-        >
+        <Button variant="outline" asChild>
           <Link href="/my/projects/new">
             新しいプロジェクト
             <FilePenLineIcon />
