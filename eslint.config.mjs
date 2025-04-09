@@ -34,6 +34,9 @@ const importAccessConfig = {
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
   importAccessConfig,
+  {
+    ignores: ["src/__generated__/**"],
+  },
 ];
 
 export default eslintConfig;
