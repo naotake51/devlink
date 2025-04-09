@@ -5,10 +5,7 @@ export const NewProjectSchema = z.object({
     .string()
     .min(1, { message: "タイトルは必須です" })
     .max(255, { message: "タイトルは255文字以内です" }),
-  description: z
-    .string()
-    .max(4096, { message: "説明は4096文字以内です" })
-    .optional(),
+  description: z.string().max(4096, { message: "説明は4096文字以内です" }),
 });
 
 export type NewProjectInput = z.infer<typeof NewProjectSchema>;

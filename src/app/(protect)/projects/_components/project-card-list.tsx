@@ -1,6 +1,6 @@
-import { createClient } from "@/utils/supabase/server";
+import prisma from "@/lib/prisma";
 import "server-only";
-import { PROJECT_CARD_FIELDS, ProjectCard } from "./project-card";
+import { ProjectCard, projectSelectForProjectCard } from "./project-card";
 
 interface SearchParams {
   q?: string;
@@ -32,24 +32,23 @@ export async function ProjectCardList({
 }
 
 async function searchProjects(query?: string) {
-  const supabase = await createClient();
-
-  const queryBuilder = supabase.from("projects").select(PROJECT_CARD_FIELDS);
-
-  if (query) {
-    /**
-     * TODO::
-     * 全角・半角、かな、カタカナなどあいまいな検索を実装する。
-     * PGroongaの使用を検討する。
-     */
-    queryBuilder.ilike("title", `%${query}%`);
-  }
-
-  const { data: projects, error } = await queryBuilder;
-
-  if (error) {
-    throw error;
-  }
+  const projects = await prisma.project.findMany({
+    select: {
+      id: true,
+      ...projectSelectForProjectCard,
+    },
+    where: {
+      title: query
+        ? {
+            contains: query,
+            mode: "insensitive",
+          }
+        : undefined,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return projects;
 }

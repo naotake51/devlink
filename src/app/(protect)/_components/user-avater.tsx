@@ -1,7 +1,17 @@
+import { Prisma } from "@/__generated__/prisma";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { createClient } from "@/utils/supabase/server";
 import clsx from "clsx";
 import "server-only";
+
+export const profileSelectForUserAvatar = {
+  id: true,
+  displayName: true,
+  avatarUrl: true,
+} satisfies Prisma.ProfileSelect;
+
+type ProfilePayloadForUserAvatar = Prisma.ProfileGetPayload<{
+  select: typeof profileSelectForUserAvatar;
+}>;
 
 const getFallbackAvatarInitial = (displayName: string) =>
   displayName.charAt(0).toUpperCase() ?? "U";
@@ -35,33 +45,18 @@ const getFallbackAvatarColorClass = (id: string): string => {
 };
 
 export interface UserAvatarProps {
-  profileId: string;
+  profile: ProfilePayloadForUserAvatar;
 }
 
-export async function UserAvatar({ profileId }: UserAvatarProps) {
-  const supabase = await createClient();
-
-  /**
-   * TODO:: 複数箇所で使用されるようになったら、dataloaderを使って効率的にデータ取得するようにする
-   */
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id, avatar_url, display_name")
-    .eq("id", profileId)
-    .single();
-
-  if (!profile) {
-    throw new Error("Profile not found");
-  }
-
-  const fallbackAvatarInitial = getFallbackAvatarInitial(profile.display_name);
+export async function UserAvatar({ profile }: UserAvatarProps) {
+  const fallbackAvatarInitial = getFallbackAvatarInitial(profile.displayName);
   const fallbackAvatarColorClass = getFallbackAvatarColorClass(profile.id);
 
   return (
     <Avatar>
       <AvatarImage
-        src={profile.avatar_url ?? undefined}
-        alt={profile.display_name}
+        src={profile.avatarUrl ?? undefined}
+        alt={profile.displayName}
       />
       <AvatarFallback className={clsx("text-white", fallbackAvatarColorClass)}>
         {fallbackAvatarInitial}

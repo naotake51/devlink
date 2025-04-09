@@ -1,3 +1,8 @@
+import { Prisma, ProjectMemberRole } from "@/__generated__/prisma";
+import {
+  UserAvatar,
+  profileSelectForUserAvatar,
+} from "@/app/(protect)/_components/user-avater";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,46 +12,47 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { User } from "lucide-react";
-import Image from "next/image";
+import merge from "lodash.merge";
 import Link from "next/link";
 import "server-only";
-
-export const MY_PROJECT_CARD_FIELDS = `
-  id,
-  title,
-  description,
-  created_at,
-  profile:profiles (
-    id,
-    display_name,
-    avatar_url
-  )
-`;
 
 /**
  * @package
  */
-export interface MyProjectCardPropsProject {
-  id: string;
-  title: string;
-  description: string | null;
-  created_at: string;
-  profile: {
-    id: string;
-    display_name: string;
-    avatar_url: string | null;
-  };
-}
+export const projectSelectForMyProjectCard = {
+  id: true,
+  title: true,
+  description: true,
+  createdAt: true,
+  projectMembers: {
+    select: {
+      role: true,
+      profile: {
+        select: merge(
+          { id: true, displayName: true } satisfies Prisma.ProfileSelect,
+          profileSelectForUserAvatar,
+        ),
+      },
+    },
+  },
+} satisfies Prisma.ProjectSelect;
+
+type ProjectPayloadForMyProjectCard = Prisma.ProjectGetPayload<{
+  select: typeof projectSelectForMyProjectCard;
+}>;
 
 interface MyProjectCardProps {
-  project: MyProjectCardPropsProject;
+  project: ProjectPayloadForMyProjectCard;
 }
 
 /**
  * @package
  */
 export function MyProjectCard({ project }: MyProjectCardProps) {
+  const owners = project.projectMembers.filter(
+    (member) => member.role === ProjectMemberRole.OWNER,
+  );
+
   return (
     <Card
       style={{
@@ -56,27 +62,17 @@ export function MyProjectCard({ project }: MyProjectCardProps) {
       <CardHeader>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>
-          {new Date(project.created_at).toLocaleDateString("ja-JP")}
+          {new Date(project.createdAt).toLocaleDateString("ja-JP")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium">
-            {project.profile.avatar_url ? (
-              <Image
-                src={project.profile.avatar_url}
-                alt={project.profile.display_name}
-                className="w-full h-full rounded-full object-cover"
-              />
-            ) : (
-              <User className="w-4 h-4 text-gray-500" />
-            )}
-          </div>
-          <div>
-            <p className="text-sm font-medium">
-              {project.profile.display_name}
-            </p>
-          </div>
+        <div className="flex items-center gap-4">
+          {owners.map((owner) => (
+            <div className="flex items-center gap-2" key={owner.profile.id}>
+              <UserAvatar profile={owner.profile} />
+              <p className="text-sm font-medium">{owner.profile.displayName}</p>
+            </div>
+          ))}
         </div>
         {project.description && (
           <p className="text-sm text-muted-foreground line-clamp-2">

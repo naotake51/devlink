@@ -1,41 +1,31 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { Prisma, ProjectMemberRole } from "@/__generated__/prisma";
+import {
+  UserAvatar,
+  profileSelectForUserAvatar,
+} from "@/app/(protect)/_components/user-avater";
 import { Markdown } from "@/components/markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { createClient } from "@/utils/supabase/server";
+import prisma from "@/lib/prisma";
+import merge from "lodash.merge";
 import { FilePenLineIcon } from "lucide-react";
 import Link from "next/link";
 import "server-only";
-
-const PROJECT_DETAIL_FIELDS = `
-  id,
-  owner_id,
-  title,
-  description,
-  created_at,
-  profile:profiles (
-    id,
-    display_name,
-    avatar_url
-  )
-`;
 
 type ProjectDetailProps = {
   projectId: string;
 };
 
 export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
-  const supabase = await createClient();
-
-  const { data: project } = await supabase
-    .from("projects")
-    .select(PROJECT_DETAIL_FIELDS)
-    .eq("id", projectId)
-    .single();
+  const project = await getProjectDetail(projectId);
 
   if (!project) {
     return <div>プロジェクトが見つかりません。</div>;
   }
+
+  const owners = project.projectMembers.filter(
+    (member) => member.role === ProjectMemberRole.OWNER,
+  );
 
   return (
     <Card
@@ -53,17 +43,46 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-center gap-2">
-          <UserAvatar profileId={project.owner_id} />
-          <p className="text-md text-muted-foreground">
-            {project.profile?.display_name}
-          </p>
+        <div className="flex items-center gap-4">
+          {owners.map((owner) => (
+            <div className="flex items-center gap-2" key={owner.profile.id}>
+              <UserAvatar profile={owner.profile} />
+              <p className="text-sm font-medium">{owner.profile.displayName}</p>
+            </div>
+          ))}
         </div>
         <p className="text-xs text-muted-foreground">
-          {new Date(project.created_at).toLocaleString()}
+          {new Date(project.createdAt).toLocaleString()}
         </p>
         <Markdown content={project.description ?? ""} />
       </CardContent>
     </Card>
   );
+}
+
+async function getProjectDetail(projectId: string) {
+  const project = await prisma.project.findUnique({
+    where: {
+      id: projectId,
+    },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      createdAt: true,
+      projectMembers: {
+        select: {
+          role: true,
+          profile: {
+            select: merge(
+              { id: true, displayName: true } satisfies Prisma.ProfileSelect,
+              profileSelectForUserAvatar,
+            ),
+          },
+        },
+      },
+    },
+  });
+
+  return project;
 }

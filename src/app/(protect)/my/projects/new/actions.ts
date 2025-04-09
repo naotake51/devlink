@@ -1,5 +1,7 @@
 "use server";
 
+import { ProjectMemberRole } from "@/__generated__/prisma";
+import prisma from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import { createSafeActionClient } from "next-safe-action";
 import { revalidatePath } from "next/cache";
@@ -22,16 +24,23 @@ export const createProject = safeAction
       throw new Error("User not authenticated");
     }
 
-    const { error } = await supabase.from("projects").insert({
-      title: data.name,
-      description: data.description,
-      owner_id: user.id,
-    });
+    await prisma.$transaction(async (prisma) => {
+      const createdProject = await prisma.project.create({
+        data: {
+          title: data.name,
+          description: data.description,
+        },
+      });
 
-    if (error) {
-      console.error("Error creating project:", error);
-      throw new Error("プロジェクトの作成に失敗しました");
-    }
+      await prisma.projectMember.create({
+        data: {
+          projectId: createdProject.id,
+          profileId: user.id,
+          role: ProjectMemberRole.OWNER,
+          devPoint: 0,
+        },
+      });
+    });
 
     revalidatePath("/my");
     redirect("/my");

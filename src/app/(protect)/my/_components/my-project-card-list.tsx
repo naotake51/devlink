@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import prisma from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import { FilePenLineIcon } from "lucide-react";
 import Link from "next/link";
-import { MY_PROJECT_CARD_FIELDS, MyProjectCard } from "./my-project-card";
+import {
+  MyProjectCard,
+  projectSelectForMyProjectCard,
+} from "./my-project-card";
 
 export async function MyProjectCardList() {
   const projects = await getMyProjects();
@@ -43,19 +47,29 @@ async function getMyProjects() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error("認証ユーザーの取得に失敗しました");
+    throw new Error("Failed to retrieve authenticated user");
   }
 
-  const queryBuilder = supabase
-    .from("projects")
-    .select(MY_PROJECT_CARD_FIELDS)
-    .eq("owner_id", user.id);
+  const profile = await prisma.profile.findUnique({
+    where: {
+      id: user.id,
+    },
+    select: {
+      projectMembers: {
+        select: {
+          project: {
+            select: {
+              ...projectSelectForMyProjectCard,
+            },
+          },
+        },
+      },
+    },
+  });
 
-  const { data: projects, error } = await queryBuilder;
-
-  if (error) {
-    throw error;
+  if (!profile) {
+    throw new Error("Failed to retrieve profile");
   }
 
-  return projects;
+  return profile?.projectMembers.map((member) => member.project);
 }
