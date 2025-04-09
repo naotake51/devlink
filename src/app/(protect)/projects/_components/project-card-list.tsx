@@ -38,11 +38,27 @@ async function searchProjects(query?: string) {
       ...projectSelectForProjectCard,
     },
     where: {
-      title: query
-        ? {
-            contains: query,
-            mode: "insensitive",
-          }
+      /**
+       * TODO::
+       * 全角・半角、かな、カタカナなどあいまいな検索を実装する。
+       * 将来的にはインデックス（転置）が必要になる。
+       * PGroongaの使用を検討する。
+       */
+      OR: query
+        ? [
+            {
+              title: {
+                contains: query,
+                mode: "insensitive",
+              },
+            },
+            {
+              description: {
+                contains: query,
+                mode: "insensitive",
+              },
+            },
+          ]
         : undefined,
     },
     orderBy: {
