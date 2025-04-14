@@ -52,7 +52,7 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
           ))}
         </div>
         <p className="text-xs text-muted-foreground">
-          {new Date(project.createdAt).toLocaleString()}
+          {new Date(project.startDate).toLocaleDateString()}
         </p>
         <Markdown content={project.description ?? ""} />
       </CardContent>

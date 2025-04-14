@@ -1,3 +1,4 @@
+import { today } from "@/lib/date-utils";
 import { Prisma, PrismaClient } from "../src/__generated__/prisma";
 
 const prisma = new PrismaClient();
@@ -17,10 +18,12 @@ const projectData: Prisma.ProjectCreateInput[] = [
   {
     title: "Project A",
     description: "Description of Project A",
+    startDate: today(),
   },
   {
     title: "Project B",
     description: "Description of Project B",
+    startDate: today(),
   },
 ];
 

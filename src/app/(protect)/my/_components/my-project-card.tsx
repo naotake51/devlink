@@ -23,7 +23,7 @@ export const projectSelectForMyProjectCard = {
   id: true,
   title: true,
   description: true,
-  createdAt: true,
+  startDate: true,
   projectMembers: {
     select: {
       role: true,
@@ -62,7 +62,7 @@ export function MyProjectCard({ project }: MyProjectCardProps) {
       <CardHeader>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>
-          {new Date(project.createdAt).toLocaleDateString("ja-JP")}
+          {new Date(project.startDate).toLocaleDateString("ja-JP")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">

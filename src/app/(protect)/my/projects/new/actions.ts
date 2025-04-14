@@ -28,6 +28,7 @@ export const createProject = safeAction
       const createdProject = await prisma.project.create({
         data: {
           title: data.name,
+          startDate: data.startDate,
           description: data.description,
         },
       });

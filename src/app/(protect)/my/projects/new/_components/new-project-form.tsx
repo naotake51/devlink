@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 import { MarkdownTextarea } from "@/components/markdown-textarea";
 import { Button } from "@/components/ui/button";
+import { DateInput } from "@/components/ui/date-input";
 import {
   Form,
   FormControl,
@@ -17,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { today } from "@/lib/date-utils";
 import { LoaderIcon, SaveIcon } from "lucide-react";
 import { createProject } from "../actions";
 import { NewProjectSchema, type NewProjectInput } from "../schema";
@@ -26,6 +28,7 @@ export function NewProjectForm() {
     resolver: zodResolver(NewProjectSchema),
     defaultValues: {
       name: "",
+      startDate: today(),
       description: "",
     },
   });
@@ -77,6 +80,19 @@ export function NewProjectForm() {
                   <FormLabel>タイトル</FormLabel>
                   <FormControl>
                     <Input placeholder="例: 新しいWebアプリ" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>開始日</FormLabel>
+                  <FormControl>
+                    <DateInput {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

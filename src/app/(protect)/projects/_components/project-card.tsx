@@ -21,7 +21,7 @@ import "server-only";
 export const projectSelectForProjectCard = {
   title: true,
   description: true,
-  createdAt: true,
+  startDate: true,
   projectMembers: {
     select: {
       role: true,
@@ -58,7 +58,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <CardHeader>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>
-          {new Date(project.createdAt).toLocaleDateString("ja-JP")}
+          {new Date(project.startDate).toLocaleDateString("ja-JP")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">

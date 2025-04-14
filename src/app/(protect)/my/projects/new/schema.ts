@@ -1,3 +1,4 @@
+import { today } from "@/lib/date-utils";
 import { z } from "zod";
 
 export const NewProjectSchema = z.object({
@@ -5,6 +6,9 @@ export const NewProjectSchema = z.object({
     .string()
     .min(1, { message: "タイトルは必須です" })
     .max(255, { message: "タイトルは255文字以内です" }),
+  startDate: z.date().min(today(), {
+    message: "開始日は今日以降の日付を指定してください",
+  }),
   description: z.string().max(4096, { message: "説明は4096文字以内です" }),
 });
 
