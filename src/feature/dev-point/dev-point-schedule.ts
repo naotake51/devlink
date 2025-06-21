@@ -24,7 +24,7 @@ export function generateDevPointSchedule(
 
     return {
       date: date,
-      devPoint: 100 / (1 + (sprint - 1) / 26),
+      devPoint: Math.floor(10000 / (1 + (sprint - 1) / 26)),
       sprint: sprint,
       isPublished: date < currentDate,
     };

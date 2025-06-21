@@ -37,13 +37,9 @@ interface MyProjectDevPointScheduleProps {
 
 const chartConfig = {
   devPoint: {
-    label: "Dev Point",
+    label: "発行 Dev Point",
   },
 } satisfies ChartConfig;
-
-function sum(items: number[]) {
-  return items.reduce((acc, cur) => acc + cur, 0);
-}
 
 export function MyProjectDevPointSchedule({
   project,
@@ -54,10 +50,6 @@ export function MyProjectDevPointSchedule({
   const currentDate = _today;
 
   const chartData = generateDevPointSchedule(startDate, endDate, currentDate);
-
-  const publishedDevPointSum = sum(
-    chartData.filter((item) => item.isPublished).map((item) => item.devPoint),
-  );
 
   const chartDataWithDesign = chartData.map((item) => ({
     date:
@@ -84,7 +76,7 @@ export function MyProjectDevPointSchedule({
                 year: "numeric",
               })}
             </p>
-            <p>発行: Sprint(n) = 100 / (1 + (n - 1) / 26)</p>
+            <p>発行: Sprint(n) = 10000 / (1 + (n - 1) / 26)</p>
           </CardDescription>
         </div>
         <div className="flex">
@@ -92,8 +84,8 @@ export function MyProjectDevPointSchedule({
             <span className="text-xs text-muted-foreground">
               発行済 Dev Point
             </span>
-            <span className="text-chart-3 text-lg font-bold leading-none sm:text-3xl">
-              {publishedDevPointSum.toFixed(3)}
+            <span className="text-chart-3 text-lg font-bold leading-none sm:text-3xl text-right">
+              {/* TODO */}0
             </span>
           </div>
         </div>

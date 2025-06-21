@@ -1,5 +1,6 @@
 import { Prisma } from "@/__generated__/prisma";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import clsx from "clsx";
@@ -70,17 +71,25 @@ export async function UserAvatar({
   size,
   profile,
 }: UserAvatarProps) {
-  const fallbackAvatarInitial = getFallbackAvatarInitial(profile.displayName);
-  const fallbackAvatarColorClass = getFallbackAvatarColorClass(profile.id);
-
   return (
     <Avatar className={cn(userAvatarVariants({ size, className }))}>
       <AvatarImage
         src={profile.avatarUrl ?? undefined}
         alt={profile.displayName}
       />
-      <AvatarFallback className={clsx("text-white", fallbackAvatarColorClass)}>
-        {fallbackAvatarInitial}
+      <AvatarFallback asChild>
+        {profile.avatarUrl ? (
+          <Skeleton />
+        ) : (
+          <div
+            className={clsx(
+              "text-white",
+              getFallbackAvatarColorClass(profile.id),
+            )}
+          >
+            {getFallbackAvatarInitial(profile.displayName)}
+          </div>
+        )}
       </AvatarFallback>
     </Avatar>
   );

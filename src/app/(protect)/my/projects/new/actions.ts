@@ -39,6 +39,7 @@ export const createProject = safeAction
           profileId: user.id,
           role: ProjectMemberRole.OWNER,
           devPoint: 0,
+          initialDevPoint: 0,
         },
       });
     });

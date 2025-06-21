@@ -17,6 +17,8 @@ import {
   MyProjectMemberList,
   projectSelectForMyProjectMemberList,
 } from "./my-project-member-list";
+import { MyProjectSprintList } from "./my-project-sprint-list";
+import { MyProjectSprintNoticeBadge } from "./my-project-sprint-notice-badge";
 
 type ProjectDetailProps = {
   projectId: string;
@@ -65,6 +67,10 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
             <TabsTrigger value="detail">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
+            <TabsTrigger value="sprints">
+              Sprint
+              <MyProjectSprintNoticeBadge projectId={project.id} />
+            </TabsTrigger>
             <TabsTrigger value="resolutions">決議</TabsTrigger>
             <TabsTrigger value="settings">設定</TabsTrigger>
           </TabsList>
@@ -76,6 +82,9 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
           </TabsContent>
           <TabsContent value="dev-point">
             <MyProjectDevPoint project={project} />
+          </TabsContent>
+          <TabsContent value="sprints">
+            <MyProjectSprintList project={project} />
           </TabsContent>
           <TabsContent value="resolutions">
             決議（Protected）
