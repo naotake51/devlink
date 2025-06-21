@@ -9,7 +9,7 @@ import { MyProjectDetail } from "./_components/my-project-detail";
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   return (
     <div>

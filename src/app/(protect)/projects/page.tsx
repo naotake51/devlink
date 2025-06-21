@@ -13,7 +13,7 @@ interface SearchParams {
 export default async function ProjectsPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
   return (
     <div>
@@ -23,7 +23,7 @@ export default async function ProjectsPage({
       </h1>
       <div className="space-y-4">
         <ProjectSearchForm />
-        <ProjectCardList searchParams={searchParams} />
+        <ProjectCardList searchParams={await searchParams} />
       </div>
     </div>
   );
