@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint --no-cache",
     "format": "prettier --write .",
     "prepare": "husky",
-    "generate": "supabase gen types typescript --local > src/__generated__/database.types.ts"
+    "supabase:start": "npx supabase start",
+    "supabase:stop": "npx supabase stop",
+    "supabase:status": "npx supabase status",
+    "supabase:generate-types": "npx supabase gen types typescript --local --schema public > src/__generated__/database.types.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
