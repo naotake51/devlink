@@ -11,6 +11,8 @@ export default async function ProjectDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+
   return (
     <div>
       <Link href="/projects">
@@ -20,7 +22,7 @@ export default async function ProjectDetailPage({
         </p>
       </Link>
       <div className="space-y-4 flex-1">
-        <ProjectDetail projectId={(await params).id} />
+        <ProjectDetail projectId={id} />
       </div>
     </div>
   );

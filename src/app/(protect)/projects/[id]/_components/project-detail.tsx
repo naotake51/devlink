@@ -17,9 +17,9 @@ import {
   projectSelectForProjectMemberList,
 } from "./project-member-list";
 
-type ProjectDetailProps = {
+interface ProjectDetailProps {
   projectId: string;
-};
+}
 
 export async function ProjectDetail({ projectId }: ProjectDetailProps) {
   const project = await getProjectDetail(projectId);

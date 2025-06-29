@@ -6,11 +6,13 @@ import { MyProjectDetail } from "./_components/my-project-detail";
 /**
  * @private
  */
-export default async function ProjectDetailPage({
+export default async function MyProjectDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+
   return (
     <div>
       <Link href="/my">
@@ -20,7 +22,7 @@ export default async function ProjectDetailPage({
         </p>
       </Link>
       <div className="space-y-4 flex-1">
-        <MyProjectDetail projectId={(await params).id} />
+        <MyProjectDetail projectId={id} />
       </div>
     </div>
   );
