@@ -27,7 +27,8 @@ interface EditProjectFormProps {
     id: string;
     title: string;
     startDate: Date;
-    description: string;
+    serviceDescription: string;
+    techStackDescription: string;
   };
 }
 
@@ -38,7 +39,8 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
       id: project.id,
       title: project.title,
       startDate: project.startDate,
-      description: project.description,
+      serviceDescription: project.serviceDescription,
+      techStackDescription: project.techStackDescription,
     },
   });
 
@@ -112,13 +114,31 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
             />
             <FormField
               control={form.control}
-              name="description"
+              name="serviceDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>説明</FormLabel>
+                  <FormLabel>サービス概要</FormLabel>
                   <FormControl>
                     <MarkdownTextarea
                       placeholder="プロジェクトの簡単な説明を入力してください（Markdown）"
+                      className="resize-none min-h-96"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="techStackDescription"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>技術スタック</FormLabel>
+                  <FormControl>
+                    <MarkdownTextarea
+                      placeholder="プロジェクトで使用する技術スタックの説明を入力してください（Markdown）"
                       className="resize-none min-h-96"
                       {...field}
                       value={field.value ?? ""}

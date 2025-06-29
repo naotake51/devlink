@@ -24,13 +24,14 @@ model Profile {
 }
 
 model Project {
-  id             String          @id @default(uuid()) @db.Uuid
-  title          String
-  description    String          @db.Text
-  startDate      DateTime
-  createdAt      DateTime        @default(now())
-  projectMembers ProjectMember[]
-  sprints        Sprint[]
+  id                   String          @id @default(uuid()) @db.Uuid
+  title                String
+  serviceDescription   String          @db.Text @default("")
+  startDate            DateTime
+  createdAt            DateTime        @default(now())
+  techStackDescription String          @db.Text @default("")
+  projectMembers       ProjectMember[]
+  sprints              Sprint[]
 }
 
 enum ProjectMemberRole {

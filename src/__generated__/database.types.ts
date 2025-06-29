@@ -66,23 +66,26 @@ export type Database = {
       Project: {
         Row: {
           createdAt: string;
-          description: string;
           id: string;
+          serviceDescription: string;
           startDate: string;
+          techStackDescription: string;
           title: string;
         };
         Insert: {
           createdAt?: string;
-          description: string;
           id: string;
+          serviceDescription?: string;
           startDate: string;
+          techStackDescription?: string;
           title: string;
         };
         Update: {
           createdAt?: string;
-          description?: string;
           id?: string;
+          serviceDescription?: string;
           startDate?: string;
+          techStackDescription?: string;
           title?: string;
         };
         Relationships: [];

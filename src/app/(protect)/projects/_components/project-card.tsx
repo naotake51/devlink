@@ -22,7 +22,7 @@ import "server-only";
 export const projectSelectForProjectCard = {
   id: true,
   title: true,
-  description: true,
+  serviceDescription: true,
   startDate: true,
   projectMembers: {
     select: {
@@ -76,9 +76,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           ))}
         </div>
-        {project.description && (
+        {project.serviceDescription && (
           <p className="text-sm text-muted-foreground line-clamp-2">
-            {project.description}
+            {project.serviceDescription}
           </p>
         )}
       </CardContent>

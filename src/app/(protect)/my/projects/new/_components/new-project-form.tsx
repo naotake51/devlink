@@ -29,7 +29,8 @@ export function NewProjectForm() {
     defaultValues: {
       title: "",
       startDate: today(),
-      description: "",
+      serviceDescription: "",
+      techStackDescription: "",
     },
   });
 
@@ -99,13 +100,31 @@ export function NewProjectForm() {
             />
             <FormField
               control={form.control}
-              name="description"
+              name="serviceDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>説明</FormLabel>
+                  <FormLabel>サービス概要</FormLabel>
                   <FormControl>
                     <MarkdownTextarea
                       placeholder="プロジェクトの簡単な説明を入力してください（Markdown）"
+                      className="resize-none min-h-96"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="techStackDescription"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>技術スタック</FormLabel>
+                  <FormControl>
+                    <MarkdownTextarea
+                      placeholder="プロジェクトで使用する技術スタックの説明を入力してください（Markdown）"
                       className="resize-none min-h-96"
                       {...field}
                       value={field.value ?? ""}
