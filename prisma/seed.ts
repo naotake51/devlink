@@ -23,7 +23,8 @@ const projectData: Prisma.ProjectCreateInput[] = [
   {
     id: "00000000-0000-0000-0000-000000000000",
     title: "Project A",
-    description: "Description of Project A",
+    serviceDescription: "Description of service for Project A",
+    techStackDescription: "Description of tech stack for Project A",
     startDate: baseDate,
     projectMembers: {
       create: [
@@ -49,7 +50,8 @@ const projectData: Prisma.ProjectCreateInput[] = [
   {
     id: "00000000-0000-0000-0000-000000000001",
     title: "Project B",
-    description: "Description of Project B",
+    serviceDescription: "Description of service for Project B",
+    techStackDescription: "Description of tech stack for Project B",
     startDate: baseDate,
   },
 ];
