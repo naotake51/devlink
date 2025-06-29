@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { unstable_ViewTransition as ViewTransition } from "react";
 import "server-only";
 import { AppHeader } from "./_components/app-header";
 import { AppSidebar } from "./_components/app-sidebar";
@@ -18,7 +19,9 @@ export default function ProtectedLayout({
         <AppHeader>
           <SidebarTrigger />
         </AppHeader>
-        <main className="p-4 flex-1 bg-gray-50">{children}</main>
+        <main className="p-4 flex-1 bg-gray-50">
+          <ViewTransition>{children}</ViewTransition>
+        </main>
       </div>
     </SidebarProvider>
   );

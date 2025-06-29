@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { unstable_ViewTransition as ViewTransition } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -36,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ViewTransition>{children}</ViewTransition>
+        {children}
         <Toaster richColors />
       </body>
     </html>
