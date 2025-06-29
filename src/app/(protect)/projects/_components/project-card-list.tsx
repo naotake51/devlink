@@ -34,7 +34,9 @@ export async function ProjectCardList({
 async function searchProjects(query?: string) {
   const projects = await prisma.project.findMany({
     select: {
-      id: true,
+      ...{
+        id: true,
+      },
       ...projectSelectForProjectCard,
     },
     where: {

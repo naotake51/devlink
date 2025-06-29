@@ -13,12 +13,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import merge from "lodash.merge";
+import Link from "next/link";
 import "server-only";
 
 /**
  * @package
  */
 export const projectSelectForProjectCard = {
+  id: true,
   title: true,
   description: true,
   startDate: true,
@@ -54,7 +56,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
     (member) => member.role === ProjectMemberRole.OWNER,
   );
   return (
-    <Card>
+    <Card
+      style={{
+        viewTransitionName: `project-${project.id}`,
+      }}
+    >
       <CardHeader>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>
@@ -77,8 +83,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="w-full">
-          詳細を見る
+        <Button asChild variant="outline" size="sm" className="w-full">
+          <Link href={`/projects/${project.id}`}>詳細を見る</Link>
         </Button>
       </CardFooter>
     </Card>

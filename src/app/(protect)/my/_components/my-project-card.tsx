@@ -56,7 +56,7 @@ export function MyProjectCard({ project }: MyProjectCardProps) {
   return (
     <Card
       style={{
-        viewTransitionName: `project-${project.id}`,
+        viewTransitionName: `my-project-${project.id}`,
       }}
     >
       <CardHeader>
