@@ -2,7 +2,7 @@ import { today } from "@/lib/date-utils";
 import { z } from "zod";
 
 export const NewProjectSchema = z.object({
-  name: z
+  title: z
     .string()
     .min(1, { message: "タイトルは必須です" })
     .max(255, { message: "タイトルは255文字以内です" }),

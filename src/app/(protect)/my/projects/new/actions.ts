@@ -27,7 +27,7 @@ export const createProject = safeAction
     await prisma.$transaction(async (prisma) => {
       const createdProject = await prisma.project.create({
         data: {
-          title: data.name,
+          title: data.title,
           startDate: data.startDate,
           description: data.description,
         },

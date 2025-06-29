@@ -27,7 +27,7 @@ export function NewProjectForm() {
   const form = useForm<NewProjectInput>({
     resolver: zodResolver(NewProjectSchema),
     defaultValues: {
-      name: "",
+      title: "",
       startDate: today(),
       description: "",
     },
@@ -36,7 +36,6 @@ export function NewProjectForm() {
   const { execute, status } = useAction(createProject, {
     onSuccess: () => {
       toast.success("プロジェクトが正常に作成されました！");
-      form.reset();
     },
     onError: ({ error }) => {
       console.error("Project creation error:", error);
@@ -74,7 +73,7 @@ export function NewProjectForm() {
           >
             <FormField
               control={form.control}
-              name="name"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>タイトル</FormLabel>
