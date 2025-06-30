@@ -3,7 +3,6 @@ import {
   UserAvatar,
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
-import { Markdown } from "@/components/markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +15,7 @@ import {
   ProjectMemberList,
   projectSelectForProjectMemberList,
 } from "./project-member-list";
+import { ProjectOverview } from "./project-overview";
 
 interface ProjectDetailProps {
   projectId: string;
@@ -57,18 +57,14 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.startDate).toLocaleDateString()}
         </p>
-        <Tabs defaultValue="service">
+        <Tabs defaultValue="overview">
           <TabsList>
-            <TabsTrigger value="service">サービス概要</TabsTrigger>
-            <TabsTrigger value="tech-stack">技術スタック</TabsTrigger>
+            <TabsTrigger value="overview">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
           </TabsList>
-          <TabsContent value="service">
-            <Markdown content={project.serviceDescription ?? ""} />
-          </TabsContent>
-          <TabsContent value="tech-stack">
-            <Markdown content={project.techStackDescription ?? ""} />
+          <TabsContent value="overview">
+            <ProjectOverview content={project.description ?? ""} />
           </TabsContent>
           <TabsContent value="members">
             <ProjectMemberList project={project} />
@@ -91,8 +87,7 @@ async function getProjectDetail(projectId: string) {
       {
         id: true,
         title: true,
-        serviceDescription: true,
-        techStackDescription: true,
+        description: true,
         startDate: true,
         projectMembers: {
           select: {

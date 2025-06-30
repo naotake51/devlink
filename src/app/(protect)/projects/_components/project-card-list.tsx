@@ -55,7 +55,7 @@ async function searchProjects(query?: string) {
               },
             },
             {
-              serviceDescription: {
+              description: {
                 contains: query,
                 mode: "insensitive",
               },
