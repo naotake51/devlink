@@ -23,8 +23,7 @@ async function getProject(projectId: string) {
     select: {
       id: true,
       title: true,
-      serviceDescription: true,
-      techStackDescription: true,
+      description: true,
       startDate: true,
     } satisfies Prisma.ProjectSelect,
   });

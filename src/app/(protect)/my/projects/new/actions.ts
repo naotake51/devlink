@@ -29,8 +29,7 @@ export const createProject = safeAction
         data: {
           title: data.title,
           startDate: data.startDate,
-          serviceDescription: data.serviceDescription,
-          techStackDescription: data.techStackDescription,
+          description: data.description,
         },
       });
 

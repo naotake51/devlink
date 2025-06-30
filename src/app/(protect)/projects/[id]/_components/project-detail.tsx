@@ -57,18 +57,14 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.startDate).toLocaleDateString()}
         </p>
-        <Tabs defaultValue="service">
+        <Tabs defaultValue="detail">
           <TabsList>
-            <TabsTrigger value="service">サービス概要</TabsTrigger>
-            <TabsTrigger value="tech-stack">技術スタック</TabsTrigger>
+            <TabsTrigger value="detail">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
           </TabsList>
-          <TabsContent value="service">
-            <Markdown content={project.serviceDescription ?? ""} />
-          </TabsContent>
-          <TabsContent value="tech-stack">
-            <Markdown content={project.techStackDescription ?? ""} />
+          <TabsContent value="detail">
+            <Markdown content={project.description ?? ""} />
           </TabsContent>
           <TabsContent value="members">
             <ProjectMemberList project={project} />
@@ -91,8 +87,7 @@ async function getProjectDetail(projectId: string) {
       {
         id: true,
         title: true,
-        serviceDescription: true,
-        techStackDescription: true,
+        description: true,
         startDate: true,
         projectMembers: {
           select: {

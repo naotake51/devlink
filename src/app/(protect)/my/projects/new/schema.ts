@@ -9,12 +9,7 @@ export const NewProjectSchema = z.object({
   startDate: z.date().min(today(), {
     message: "開始日は今日以降の日付を指定してください",
   }),
-  serviceDescription: z
-    .string()
-    .max(4096, { message: "サービス概要は4096文字以内です" }),
-  techStackDescription: z
-    .string()
-    .max(4096, { message: "技術スタックは4096文字以内です" }),
+  description: z.string().max(4096, { message: "説明は4096文字以内です" }),
 });
 
 export type NewProjectInput = z.infer<typeof NewProjectSchema>;
