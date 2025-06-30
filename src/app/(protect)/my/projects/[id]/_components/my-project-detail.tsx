@@ -3,7 +3,6 @@ import {
   UserAvatar,
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
-import { Markdown } from "@/components/markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,6 +16,7 @@ import {
   MyProjectMemberList,
   projectSelectForMyProjectMemberList,
 } from "./my-project-member-list";
+import { MyProjectOverview } from "./my-project-overview";
 import { MyProjectSprintList } from "./my-project-sprint-list";
 import { MyProjectSprintNoticeBadge } from "./my-project-sprint-notice-badge";
 
@@ -62,9 +62,9 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.startDate).toLocaleDateString()}
         </p>
-        <Tabs defaultValue="detail">
+        <Tabs defaultValue="overview">
           <TabsList>
-            <TabsTrigger value="detail">概要</TabsTrigger>
+            <TabsTrigger value="overview">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
             <TabsTrigger value="sprints">
@@ -74,8 +74,8 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
             <TabsTrigger value="resolutions">決議</TabsTrigger>
             <TabsTrigger value="settings">設定</TabsTrigger>
           </TabsList>
-          <TabsContent value="detail">
-            <Markdown content={project.description ?? ""} />
+          <TabsContent value="overview">
+            <MyProjectOverview content={project.description ?? ""} />
           </TabsContent>
           <TabsContent value="members">
             <MyProjectMemberList project={project} />

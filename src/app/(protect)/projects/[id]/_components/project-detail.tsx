@@ -3,7 +3,6 @@ import {
   UserAvatar,
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
-import { Markdown } from "@/components/markdown";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +15,7 @@ import {
   ProjectMemberList,
   projectSelectForProjectMemberList,
 } from "./project-member-list";
+import { ProjectOverview } from "./project-overview";
 
 interface ProjectDetailProps {
   projectId: string;
@@ -57,14 +57,14 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.startDate).toLocaleDateString()}
         </p>
-        <Tabs defaultValue="detail">
+        <Tabs defaultValue="overview">
           <TabsList>
-            <TabsTrigger value="detail">概要</TabsTrigger>
+            <TabsTrigger value="overview">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
           </TabsList>
-          <TabsContent value="detail">
-            <Markdown content={project.description ?? ""} />
+          <TabsContent value="overview">
+            <ProjectOverview content={project.description ?? ""} />
           </TabsContent>
           <TabsContent value="members">
             <ProjectMemberList project={project} />

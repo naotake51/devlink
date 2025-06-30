@@ -115,10 +115,10 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>説明</FormLabel>
+                  <FormLabel>概要</FormLabel>
                   <FormControl>
                     <MarkdownTextarea
-                      placeholder="プロジェクトの簡単な説明を入力してください（Markdown）"
+                      placeholder="プロジェクトの簡単な概要を入力してください（Markdown）"
                       className="resize-none min-h-96"
                       {...field}
                       value={field.value ?? ""}
