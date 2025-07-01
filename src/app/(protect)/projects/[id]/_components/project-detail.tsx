@@ -3,12 +3,15 @@ import {
   UserAvatar,
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/lib/prisma";
+import { createClient } from "@/utils/supabase/server";
 import merge from "lodash.merge";
 import { FilePenLineIcon } from "lucide-react";
+import Link from "next/link";
 import "server-only";
 import { ProjectDevPoint } from "./project-dev-point";
 import {
@@ -22,8 +25,15 @@ interface ProjectDetailProps {
 }
 
 export async function ProjectDetail({ projectId }: ProjectDetailProps) {
-  const project = await getProjectDetail(projectId);
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
 
+  const project = await getProjectDetail(projectId);
   if (!project) {
     return <div>プロジェクトが見つかりません。</div>;
   }
@@ -31,6 +41,8 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
   const owners = project.projectMembers.filter(
     (member) => member.role === ProjectMemberRole.OWNER,
   );
+
+  const projectApplication = await getProjectApplication(projectId, user.id);
 
   return (
     <Card
@@ -40,10 +52,18 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
     >
       <CardHeader className="flex items-center justify-between">
         <CardTitle>{project.title}</CardTitle>
-        <Button variant="outline" size="sm">
-          応募
-          <FilePenLineIcon />
-        </Button>
+        {projectApplication ? (
+          <Badge variant="secondary" className="bg-blue-500 text-white text-md">
+            応募中
+          </Badge>
+        ) : (
+          <Link href={`/projects/${projectId}/application`}>
+            <Button variant="outline" size="sm">
+              応募
+              <FilePenLineIcon />
+            </Button>
+          </Link>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-4">
@@ -106,4 +126,17 @@ async function getProjectDetail(projectId: string) {
   });
 
   return project;
+}
+
+async function getProjectApplication(projectId: string, profileId: string) {
+  const application = await prisma.projectApplication.findUnique({
+    where: {
+      projectId_profileId: {
+        projectId,
+        profileId,
+      },
+    },
+  });
+
+  return application;
 }
