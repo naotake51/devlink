@@ -19,6 +19,7 @@ import {
   projectSelectForProjectMemberList,
 } from "./project-member-list";
 import { ProjectOverview } from "./project-overview";
+import { ProjectThread } from "./project-thread";
 
 interface ProjectDetailProps {
   projectId: string;
@@ -82,6 +83,7 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
             <TabsTrigger value="overview">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
+            <TabsTrigger value="thread">メッセージ</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
             <ProjectOverview content={project.description ?? ""} />
@@ -91,6 +93,9 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
           </TabsContent>
           <TabsContent value="dev-point">
             <ProjectDevPoint project={project} />
+          </TabsContent>
+          <TabsContent value="thread">
+            <ProjectThread projectId={projectId} profileId={user.id} />
           </TabsContent>
         </Tabs>
       </CardContent>

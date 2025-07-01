@@ -2,15 +2,13 @@
 
 import { ProjectMemberRole } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
+import { actionClient } from "@/lib/safe-action";
 import { createClient } from "@/utils/supabase/server";
-import { createSafeActionClient } from "next-safe-action";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NewProjectSchema } from "./schema";
 
-const safeAction = createSafeActionClient();
-
-export const createProject = safeAction
+export const createProject = actionClient
   .schema(NewProjectSchema)
   .action(async ({ parsedInput }) => {
     const data = parsedInput;

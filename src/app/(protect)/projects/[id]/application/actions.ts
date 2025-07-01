@@ -2,20 +2,18 @@
 
 import { ProjectApplicationStatus } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
+import { actionClient } from "@/lib/safe-action";
 import { createClient } from "@/utils/supabase/server";
-import { createSafeActionClient } from "next-safe-action";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { ProjectApplicationSchema } from "./schema";
 
-const safeAction = createSafeActionClient();
-
 const submitApplicationSchema = ProjectApplicationSchema.extend({
   projectId: z.string(),
 });
 
-export const submitApplication = safeAction
+export const submitApplication = actionClient
   .schema(submitApplicationSchema)
   .action(async ({ parsedInput }) => {
     const { message, projectId } = parsedInput;
@@ -37,25 +35,49 @@ export const submitApplication = safeAction
       throw new Error("プロフィールが見つかりません");
     }
 
-    // 既に応募があるか確認
-    const existingApplication = await prisma.projectApplication.findFirst({
-      where: {
-        projectId: projectId,
-        profileId: profile.id,
-      },
-    });
+    await prisma.$transaction(async (tx) => {
+      const existingApplication = await prisma.projectApplication.findFirst({
+        where: {
+          projectId: projectId,
+          profileId: profile.id,
+        },
+      });
 
-    if (existingApplication) {
-      throw new Error("すでに応募済みです");
-    }
+      if (existingApplication) {
+        throw new Error("すでに応募済みです");
+      }
 
-    await prisma.projectApplication.create({
-      data: {
-        projectId: projectId,
-        profileId: profile.id,
-        message: message,
-        status: ProjectApplicationStatus.PENDING,
-      },
+      await tx.projectApplication.create({
+        data: {
+          projectId: projectId,
+          profileId: profile.id,
+          status: ProjectApplicationStatus.PENDING,
+        },
+      });
+
+      // ProjectThreadを作成または取得
+      const projectThread = await tx.projectThread.upsert({
+        where: {
+          projectId_profileId: {
+            projectId: projectId,
+            profileId: profile.id,
+          },
+        },
+        update: {},
+        create: {
+          projectId: projectId,
+          profileId: profile.id,
+        },
+      });
+
+      // ProjectMessageを作成
+      await tx.projectMessage.create({
+        data: {
+          threadId: projectThread.id,
+          senderId: profile.id,
+          message: message,
+        },
+      });
     });
 
     revalidatePath(`/projects/${projectId}`);

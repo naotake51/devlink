@@ -79,7 +79,7 @@ export function ProjectApplicationForm({
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>応募メッセージ</FormLabel>
+                  <FormLabel>メッセージ</FormLabel>
                   <FormControl>
                     <MarkdownTextarea
                       placeholder="応募理由や自己PRなどのメッセージを入力してください（Markdown）"
