@@ -7,7 +7,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { ProjectApplicationSchema } from "./schema";
+import { ProjectApplicationSchema } from "./project-application-form-schema";
 
 const submitApplicationSchema = ProjectApplicationSchema.extend({
   projectId: z.string(),

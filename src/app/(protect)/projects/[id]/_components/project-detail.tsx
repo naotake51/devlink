@@ -4,15 +4,13 @@ import {
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import merge from "lodash.merge";
-import { FilePenLineIcon } from "lucide-react";
-import Link from "next/link";
 import "server-only";
+import { ProjectApplicationModal } from "./project-application-modal";
 import { ProjectDevPoint } from "./project-dev-point";
 import {
   ProjectMemberList,
@@ -58,12 +56,7 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
             応募中
           </Badge>
         ) : (
-          <Link href={`/projects/${projectId}/application`}>
-            <Button variant="outline" size="sm">
-              応募
-              <FilePenLineIcon />
-            </Button>
-          </Link>
+          <ProjectApplicationModal project={project} />
         )}
       </CardHeader>
       <CardContent className="space-y-4">
