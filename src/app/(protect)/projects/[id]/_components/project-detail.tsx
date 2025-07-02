@@ -3,27 +3,36 @@ import {
   UserAvatar,
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/lib/prisma";
+import { createClient } from "@/utils/supabase/server";
 import merge from "lodash.merge";
-import { FilePenLineIcon } from "lucide-react";
 import "server-only";
+import { ProjectApplicationModal } from "./project-application-modal";
 import { ProjectDevPoint } from "./project-dev-point";
 import {
   ProjectMemberList,
   projectSelectForProjectMemberList,
 } from "./project-member-list";
 import { ProjectOverview } from "./project-overview";
+import { ProjectThread } from "./project-thread";
 
 interface ProjectDetailProps {
   projectId: string;
 }
 
 export async function ProjectDetail({ projectId }: ProjectDetailProps) {
-  const project = await getProjectDetail(projectId);
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
 
+  const project = await getProjectDetail(projectId);
   if (!project) {
     return <div>プロジェクトが見つかりません。</div>;
   }
@@ -31,6 +40,8 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
   const owners = project.projectMembers.filter(
     (member) => member.role === ProjectMemberRole.OWNER,
   );
+
+  const projectApplication = await getProjectApplication(projectId, user.id);
 
   return (
     <Card
@@ -40,10 +51,13 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
     >
       <CardHeader className="flex items-center justify-between">
         <CardTitle>{project.title}</CardTitle>
-        <Button variant="outline" size="sm">
-          応募
-          <FilePenLineIcon />
-        </Button>
+        {projectApplication ? (
+          <Badge variant="secondary" className="bg-blue-500 text-white text-md">
+            応募中
+          </Badge>
+        ) : (
+          <ProjectApplicationModal project={project} />
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-4">
@@ -62,6 +76,7 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
             <TabsTrigger value="overview">概要</TabsTrigger>
             <TabsTrigger value="members">メンバー</TabsTrigger>
             <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
+            <TabsTrigger value="thread">メッセージ</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
             <ProjectOverview content={project.description ?? ""} />
@@ -71,6 +86,9 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
           </TabsContent>
           <TabsContent value="dev-point">
             <ProjectDevPoint project={project} />
+          </TabsContent>
+          <TabsContent value="thread">
+            <ProjectThread projectId={projectId} profileId={user.id} />
           </TabsContent>
         </Tabs>
       </CardContent>
@@ -106,4 +124,17 @@ async function getProjectDetail(projectId: string) {
   });
 
   return project;
+}
+
+async function getProjectApplication(projectId: string, profileId: string) {
+  const application = await prisma.projectApplication.findUnique({
+    where: {
+      projectId_profileId: {
+        projectId,
+        profileId,
+      },
+    },
+  });
+
+  return application;
 }

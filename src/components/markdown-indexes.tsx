@@ -5,14 +5,14 @@ import ReactMarkdown, { Components } from "react-markdown";
 
 export function MarkdownIndexes({ content }: { content: string }) {
   return (
-    <Card>
+    <Card className="shadow-none rounded-md">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileTextIcon className="h-5 w-5" />
           目次
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-1">
+      <CardContent>
         <ReactMarkdown allowedElements={["h1", "h2"]} components={components}>
           {content}
         </ReactMarkdown>

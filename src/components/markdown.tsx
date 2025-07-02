@@ -22,7 +22,7 @@ const components: Components = {
     return (
       <h1
         id={id}
-        className="text-3xl font-bold text-gray-800 mt-6 mb-4"
+        className="text-3xl font-bold text-gray-800 mb-4 border-b pb-2 border-gray-300 first:mt-8 mt-16"
         {...props}
       >
         {children}
@@ -35,7 +35,7 @@ const components: Components = {
     return (
       <h2
         id={id}
-        className="text-2xl font-bold text-gray-800 mt-5 mb-3"
+        className="text-2xl font-bold text-gray-800 mt-8 mb-3 border-b pb-2 border-gray-300"
         {...props}
       >
         {children}
