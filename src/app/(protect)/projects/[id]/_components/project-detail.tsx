@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import merge from "lodash.merge";
+import Link from "next/link";
 import "server-only";
 import { ProjectApplicationModal } from "./project-application-modal";
 import { ProjectDevPoint } from "./project-dev-point";
@@ -21,9 +22,10 @@ import { ProjectThread } from "./project-thread";
 
 interface ProjectDetailProps {
   projectId: string;
+  tab: string;
 }
 
-export async function ProjectDetail({ projectId }: ProjectDetailProps) {
+export async function ProjectDetail({ projectId, tab }: ProjectDetailProps) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -71,24 +73,36 @@ export async function ProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.startDate).toLocaleDateString()}
         </p>
-        <Tabs defaultValue="overview">
+        <Tabs value={tab}>
           <TabsList>
-            <TabsTrigger value="overview">概要</TabsTrigger>
-            <TabsTrigger value="members">メンバー</TabsTrigger>
-            <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
-            <TabsTrigger value="thread">メッセージ</TabsTrigger>
+            <TabsTrigger value="overview">
+              <Link href={"?tab=overview"}>概要</Link>
+            </TabsTrigger>
+            <TabsTrigger value="members">
+              <Link href={"?tab=members"}>メンバー</Link>
+            </TabsTrigger>
+            <TabsTrigger value="dev-point">
+              <Link href={"?tab=dev-point"}>Dev Point</Link>
+            </TabsTrigger>
+            <TabsTrigger value="thread">
+              <Link href={"?tab=thread"}>メッセージ</Link>
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <ProjectOverview content={project.description ?? ""} />
+            {tab === "overview" && (
+              <ProjectOverview content={project.description} />
+            )}
           </TabsContent>
           <TabsContent value="members">
-            <ProjectMemberList project={project} />
+            {tab === "members" && <ProjectMemberList project={project} />}
           </TabsContent>
           <TabsContent value="dev-point">
-            <ProjectDevPoint project={project} />
+            {tab === "dev-point" && <ProjectDevPoint project={project} />}
           </TabsContent>
           <TabsContent value="thread">
-            <ProjectThread projectId={projectId} profileId={user.id} />
+            {tab === "thread" && (
+              <ProjectThread projectId={projectId} profileId={user.id} />
+            )}
           </TabsContent>
         </Tabs>
       </CardContent>

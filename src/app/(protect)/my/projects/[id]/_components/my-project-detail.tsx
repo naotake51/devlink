@@ -20,11 +20,15 @@ import { MyProjectOverview } from "./my-project-overview";
 import { MyProjectSprintList } from "./my-project-sprint-list";
 import { MyProjectSprintNoticeBadge } from "./my-project-sprint-notice-badge";
 
-type ProjectDetailProps = {
+interface MyProjectDetailProps {
   projectId: string;
-};
+  tab: string;
+}
 
-export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
+export async function MyProjectDetail({
+  projectId,
+  tab,
+}: MyProjectDetailProps) {
   const project = await getProjectDetail(projectId);
 
   if (!project) {
@@ -62,36 +66,54 @@ export async function MyProjectDetail({ projectId }: ProjectDetailProps) {
         <p className="text-xs text-muted-foreground">
           {new Date(project.startDate).toLocaleDateString()}
         </p>
-        <Tabs defaultValue="overview">
+        <Tabs value={tab}>
           <TabsList>
-            <TabsTrigger value="overview">概要</TabsTrigger>
-            <TabsTrigger value="members">メンバー</TabsTrigger>
-            <TabsTrigger value="dev-point">Dev Point</TabsTrigger>
-            <TabsTrigger value="sprints">
-              Sprint
-              <MyProjectSprintNoticeBadge projectId={project.id} />
+            <TabsTrigger value="overview">
+              <Link href={"?tab=overview"}>概要</Link>
             </TabsTrigger>
-            <TabsTrigger value="resolutions">決議</TabsTrigger>
-            <TabsTrigger value="settings">設定</TabsTrigger>
+            <TabsTrigger value="members">
+              <Link href={"?tab=members"}>メンバー</Link>
+            </TabsTrigger>
+            <TabsTrigger value="dev-point">
+              <Link href={"?tab=dev-point"}>Dev Point</Link>
+            </TabsTrigger>
+            <TabsTrigger value="sprints">
+              <Link href={"?tab=sprints"}>
+                Sprint
+                <MyProjectSprintNoticeBadge projectId={project.id} />
+              </Link>
+            </TabsTrigger>
+            <TabsTrigger value="resolutions">
+              <Link href={"?tab=resolutions"}>決議</Link>
+            </TabsTrigger>
+            <TabsTrigger value="settings">
+              <Link href={"?tab=settings"}>設定</Link>
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <MyProjectOverview content={project.description ?? ""} />
+            {tab === "overview" && (
+              <MyProjectOverview content={project.description ?? ""} />
+            )}
           </TabsContent>
           <TabsContent value="members">
-            <MyProjectMemberList project={project} />
+            {tab === "members" && <MyProjectMemberList project={project} />}
           </TabsContent>
           <TabsContent value="dev-point">
-            <MyProjectDevPoint project={project} />
+            {tab === "dev-point" && <MyProjectDevPoint project={project} />}
           </TabsContent>
           <TabsContent value="sprints">
-            <MyProjectSprintList project={project} />
+            {tab === "sprints" && <MyProjectSprintList project={project} />}
           </TabsContent>
           <TabsContent value="resolutions">
-            決議（Protected）
-            メンバー採用・メンバー解雇・プロジェクト方針決定など
+            {tab === "resolutions" && (
+              <>
+                決議（Protected）
+                メンバー採用・メンバー解雇・プロジェクト方針決定など
+              </>
+            )}
           </TabsContent>
           <TabsContent value="settings">
-            設定（Protected） 削除機能など
+            {tab === "settings" && <>設定（Protected） 削除機能など</>}
           </TabsContent>
         </Tabs>
       </CardContent>
