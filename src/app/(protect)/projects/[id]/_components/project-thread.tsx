@@ -32,6 +32,7 @@ export async function ProjectThread({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
+          <MessageForm projectId={projectId} />
           <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2">
             {messages.length === 0 ? (
               <div className="text-center py-12">
@@ -74,7 +75,6 @@ export async function ProjectThread({
               ))
             )}
           </div>
-          <MessageForm projectId={projectId} />
         </CardContent>
       </Card>
     </div>
@@ -105,7 +105,7 @@ async function getProjectThread(projectId: string, profileId: string) {
           },
         },
         orderBy: {
-          createdAt: "asc",
+          createdAt: "desc",
         },
       },
     },
