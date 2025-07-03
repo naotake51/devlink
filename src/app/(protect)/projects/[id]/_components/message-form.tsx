@@ -22,9 +22,10 @@ import {
 
 interface MessageFormProps {
   projectId: string;
+  threadProfileId: string;
 }
 
-export function MessageForm({ projectId }: MessageFormProps) {
+export function MessageForm({ projectId, threadProfileId }: MessageFormProps) {
   const form = useForm<MessageFormInput>({
     resolver: zodResolver(messageFormSchema),
     defaultValues: {
@@ -53,6 +54,7 @@ export function MessageForm({ projectId }: MessageFormProps) {
     execute({
       ...values,
       projectId,
+      threadProfileId,
     });
   }
 

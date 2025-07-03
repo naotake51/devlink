@@ -4,7 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import clsx from "clsx";
-import "server-only";
 
 export const profileSelectForUserAvatar = {
   id: true,
@@ -66,11 +65,7 @@ export interface UserAvatarProps
   profile: ProfilePayloadForUserAvatar;
 }
 
-export async function UserAvatar({
-  className,
-  size,
-  profile,
-}: UserAvatarProps) {
+export function UserAvatar({ className, size, profile }: UserAvatarProps) {
   return (
     <Avatar className={cn(userAvatarVariants({ size, className }))}>
       <AvatarImage

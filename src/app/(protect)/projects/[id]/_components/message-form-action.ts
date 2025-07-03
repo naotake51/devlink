@@ -8,12 +8,13 @@ import { z } from "zod";
 import { messageFormSchema } from "./message-form-schema";
 
 const sendMessageSchema = messageFormSchema.extend({
-  projectId: z.string(),
+  projectId: z.string().uuid(),
+  threadProfileId: z.string().uuid(),
 });
 
 export const sendMessage = actionClient
   .schema(sendMessageSchema)
-  .action(async ({ parsedInput: { projectId, message } }) => {
+  .action(async ({ parsedInput: { projectId, threadProfileId, message } }) => {
     const supabase = await createClient();
     const {
       data: { user },
@@ -23,28 +24,42 @@ export const sendMessage = actionClient
       throw new Error("認証が必要です");
     }
 
-    // ProjectThreadを作成または取得
-    const projectThread = await prisma.projectThread.upsert({
-      where: {
-        projectId_profileId: {
+    await prisma.$transaction(async (tx) => {
+      const isUserThread = threadProfileId === user.id;
+      const isProjectOwner = !!(await tx.projectMember.findFirst({
+        where: {
+          projectId,
+          profileId: user.id,
+          role: "OWNER",
+        },
+      }));
+      if (!isUserThread && !isProjectOwner) {
+        throw new Error(
+          "プロジェクト管理者またはスレッドの対象者のみがメッセージを書き込めます。",
+        );
+      }
+
+      const projectThread = await tx.projectThread.upsert({
+        where: {
+          projectId_profileId: {
+            projectId,
+            profileId: threadProfileId,
+          },
+        },
+        update: {},
+        create: {
           projectId,
           profileId: user.id,
         },
-      },
-      update: {},
-      create: {
-        projectId,
-        profileId: user.id,
-      },
-    });
+      });
 
-    // メッセージを作成
-    await prisma.projectMessage.create({
-      data: {
-        threadId: projectThread.id,
-        senderId: user.id,
-        message,
-      },
+      await tx.projectMessage.create({
+        data: {
+          threadId: projectThread.id,
+          senderId: user.id,
+          message,
+        },
+      });
     });
 
     revalidatePath(`/projects/${projectId}`);
