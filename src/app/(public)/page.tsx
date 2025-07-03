@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
 import "server-only";
 
 /**
@@ -257,53 +258,63 @@ export default function RootPage() {
         </div>
       </section>
 
-      {/* DevLinkが目指す協業文化セクション */}
+      {/* DevLinkが描く新しい協業のかたちセクション */}
       <section className="py-16 px-4 bg-secondary/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">
-            DevLinkが目指す協業文化
+            DevLinkが描く協業のかたち
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>ゆるく始めて、しっかり報いる</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  初期段階の不確実性を認めながらも、貢献に対して公平な評価と報酬を実現します。
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>初期参加者を大切にする</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  成功するかわからない段階から参加してくれた人の貢献を正当に評価し、長期的な関係を築きます。
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>ミスマッチは自然に解消</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  ミスマッチは避けられないもの。だからこそ、早く・自然に解消できる仕組みを提供します。
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>安心とフェアさの両立</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  個人開発特有の不安定さを軽減し、透明性のある仕組みで全員が納得できる協業環境を提供します。
-                </CardDescription>
-              </CardContent>
-            </Card>
+          <div className="max-w-6xl mx-auto px-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl text-muted-foreground  text-center mb-2">
+                  DevPointで貢献を管理、成功時には株式に変換
+                </h3>
+                <Image
+                  src="/img/lp-comics/1.png"
+                  alt="DevLinkのコンセプトコミック1"
+                  width={1024}
+                  height={1536}
+                  className="rounded-lg shadow-xl border"
+                />
+              </div>
+              <div>
+                <h3 className="text-xl text-muted-foreground  text-center mb-2">
+                  リスクとリターンのバランス
+                </h3>
+                <Image
+                  src="/img/lp-comics/2.png"
+                  alt="DevLinkのコンセプトコミック2"
+                  width={1024}
+                  height={1024}
+                  className="rounded-lg shadow-xl border"
+                />
+              </div>
+              <div>
+                <h3 className="text-xl text-muted-foreground  text-center mb-2">
+                  意思決定の透明性
+                </h3>
+                <Image
+                  src="/img/lp-comics/3.png"
+                  alt="DevLinkのコンセプトコミック3"
+                  width={1024}
+                  height={1024}
+                  className="rounded-lg shadow-xl border"
+                />
+              </div>
+              <div>
+                <h3 className="text-xl text-muted-foreground  text-center mb-2">
+                  貢献を記録しているのでいつでも離脱可能
+                </h3>
+                <Image
+                  src="/img/lp-comics/4.png"
+                  alt="DevLinkのコンセプトコミック4"
+                  width={1024}
+                  height={1024}
+                  className="rounded-lg shadow-xl border"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
