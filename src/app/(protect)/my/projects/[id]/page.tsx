@@ -5,15 +5,17 @@ import { z } from "zod";
 import { MyProjectDetail } from "./_components/my-project-detail";
 
 const searchParamsSchema = z.object({
-  tab: z.enum([
-    "overview",
-    "members",
-    "dev-point",
-    "sprints",
-    "thread",
-    "resolutions",
-    "settings",
-  ]),
+  tab: z
+    .enum([
+      "overview",
+      "members",
+      "dev-point",
+      "sprints",
+      "thread",
+      "resolutions",
+      "settings",
+    ])
+    .optional(),
   thread: z.string().uuid().optional(),
 });
 
@@ -22,7 +24,7 @@ const searchParamsSchema = z.object({
  */
 interface MyProjectDetailPageProps {
   params: Promise<{ id: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function MyProjectDetailPage({
