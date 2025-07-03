@@ -19,15 +19,18 @@ import {
 import { MyProjectOverview } from "./my-project-overview";
 import { MyProjectSprintList } from "./my-project-sprint-list";
 import { MyProjectSprintNoticeBadge } from "./my-project-sprint-notice-badge";
+import { MyProjectThreadList } from "./my-project-thread-list";
 
 interface MyProjectDetailProps {
   projectId: string;
   tab: string;
+  thread?: string;
 }
 
 export async function MyProjectDetail({
   projectId,
   tab,
+  thread,
 }: MyProjectDetailProps) {
   const project = await getProjectDetail(projectId);
 
@@ -83,6 +86,9 @@ export async function MyProjectDetail({
                 <MyProjectSprintNoticeBadge projectId={project.id} />
               </Link>
             </TabsTrigger>
+            <TabsTrigger value="thread">
+              <Link href={"?tab=thread"}>メッセージ</Link>
+            </TabsTrigger>
             <TabsTrigger value="resolutions">
               <Link href={"?tab=resolutions"}>決議</Link>
             </TabsTrigger>
@@ -103,6 +109,11 @@ export async function MyProjectDetail({
           </TabsContent>
           <TabsContent value="sprints">
             {tab === "sprints" && <MyProjectSprintList project={project} />}
+          </TabsContent>
+          <TabsContent value="thread">
+            {tab === "thread" && (
+              <MyProjectThreadList projectId={project.id} threadId={thread} />
+            )}
           </TabsContent>
           <TabsContent value="resolutions">
             {tab === "resolutions" && (
