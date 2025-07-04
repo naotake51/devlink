@@ -28,7 +28,7 @@ function MarkdownTextarea({
         />
       </TabsContent>
       <TabsContent value="preview">
-        <div className="p-2 border border-input rounded-md">
+        <div className={cn("p-2 border border-input rounded-md", className)}>
           <Markdown content={typeof value === "string" ? value : ""} />
         </div>
       </TabsContent>

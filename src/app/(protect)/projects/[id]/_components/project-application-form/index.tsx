@@ -15,11 +15,12 @@ import { LoaderIcon, SendIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { submitApplication } from "./project-application-form-actions";
+import { submitApplication } from "../project-application-form-actions";
 import {
   ProjectApplicationSchema,
   type ProjectApplicationInput,
-} from "./project-application-form-schema";
+} from "../project-application-form-schema";
+import { messageTemplate } from "./message-template";
 
 interface ProjectApplicationFormProps {
   project: {
@@ -35,7 +36,7 @@ export function ProjectApplicationForm({
   const form = useForm<ProjectApplicationInput>({
     resolver: zodResolver(ProjectApplicationSchema),
     defaultValues: {
-      message: "",
+      message: messageTemplate,
     },
   });
 
@@ -78,7 +79,7 @@ export function ProjectApplicationForm({
                 <FormLabel>メッセージ</FormLabel>
                 <FormControl>
                   <MarkdownTextarea
-                    placeholder="応募理由や自己PRなどのメッセージを入力してください（Markdown）"
+                    placeholder="応募した理由や自分のスキル・経験、関われそうなことを入力してください（Markdown）"
                     className="min-h-[200px]"
                     {...field}
                   />
