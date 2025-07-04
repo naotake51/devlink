@@ -20,8 +20,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { today } from "@/lib/date-utils";
 import { LoaderIcon, SaveIcon } from "lucide-react";
-import { createProject } from "../actions";
-import { NewProjectSchema, type NewProjectInput } from "../schema";
+import { createProject } from "../../actions";
+import { NewProjectSchema, type NewProjectInput } from "../../schema";
+import { descriptionTemplate } from "./description-template";
 
 export function NewProjectForm() {
   const form = useForm<NewProjectInput>({
@@ -29,7 +30,7 @@ export function NewProjectForm() {
     defaultValues: {
       title: "",
       startDate: today(),
-      description: "",
+      description: descriptionTemplate,
     },
   });
 
@@ -105,10 +106,9 @@ export function NewProjectForm() {
                   <FormLabel>概要</FormLabel>
                   <FormControl>
                     <MarkdownTextarea
-                      placeholder="プロジェクトの簡単な概要を入力してください（Markdown）"
+                      placeholder="開発しているサービスの概要、技術スタック、求める人材などを入力してください（Markdown）"
                       className="resize-none min-h-96"
                       {...field}
-                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage />
