@@ -7,7 +7,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import prisma from "@/lib/prisma";
+import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import "server-only";
 import { UserAvatar, profileSelectForUserAvatar } from "./user-avater";
 
@@ -20,6 +22,16 @@ export async function UserMenu({ userId }: UserMenuProps) {
 
   if (!profile) {
     throw new Error("Profile not found");
+  }
+
+  async function handleLogout() {
+    "use server";
+
+    const supabase = await createClient();
+
+    await supabase.auth.signOut();
+
+    redirect("/");
   }
 
   return (
@@ -39,7 +51,7 @@ export async function UserMenu({ userId }: UserMenuProps) {
           <Link href="/my/settings">設定</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>ログアウト</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>ログアウト</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
