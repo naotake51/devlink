@@ -1,8 +1,13 @@
+import { ErrorMessage } from "@/components/error-message";
 import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
 import "server-only";
 import { z } from "zod";
 import { ProjectDetail } from "./_components/project-detail";
+
+const paramsSchema = z.object({
+  id: z.string().uuid(),
+});
 
 const searchParamsSchema = z.object({
   tab: z.enum(["overview", "members", "dev-point", "thread"]).optional(),
@@ -20,13 +25,19 @@ export default async function ProjectDetailPage({
   params,
   searchParams,
 }: ProjectDetailPageProps) {
-  const { id } = await params;
+  const p = paramsSchema.safeParse(await params);
+  if (!p.success) {
+    console.error("Invalid parameters:", p.error);
+    return <ErrorMessage code={400} />;
+  }
+  const { id } = p.data;
 
   const q = searchParamsSchema.safeParse(await searchParams);
   if (!q.success) {
     console.error("Invalid search parameters:", q.error);
-    return <p className="text-red-500">Invalid parameters</p>;
+    return <ErrorMessage code={400} />;
   }
+  const { tab } = q.data;
 
   return (
     <div>
@@ -37,10 +48,7 @@ export default async function ProjectDetailPage({
         </p>
       </Link>
       <div className="space-y-4 flex-1">
-        <ProjectDetail
-          projectId={id}
-          tab={typeof q.data.tab === "string" ? q.data.tab : "overview"}
-        />
+        <ProjectDetail projectId={id} tab={tab ?? "overview"} />
       </div>
     </div>
   );

@@ -2,18 +2,12 @@ import prisma from "@/lib/prisma";
 import "server-only";
 import { ProjectCard, projectSelectForProjectCard } from "./project-card";
 
-interface SearchParams {
-  q?: string;
+interface ProjectCardListProps {
+  query?: string;
 }
 
-export async function ProjectCardList({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  const query = (await searchParams).q?.trim();
-
-  const projects = await searchProjects(query);
+export async function ProjectCardList({ query }: ProjectCardListProps) {
+  const projects = await searchProjects(query ? query.trim() : undefined);
 
   return (
     <>

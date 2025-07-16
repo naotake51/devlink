@@ -1,13 +1,24 @@
+import { ErrorMessage } from "@/components/error-message";
 import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
+import { z } from "zod";
 import { EditProject } from "./_components/edit-project";
+
+const paramsSchema = z.object({
+  id: z.string().uuid(),
+});
 
 const EditMyProjectPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const { id } = await params;
+  const p = paramsSchema.safeParse(await params);
+  if (!p.success) {
+    console.error("Invalid parameters:", p.error);
+    return <ErrorMessage code={400} />;
+  }
+  const { id } = p.data;
 
   return (
     <div>
