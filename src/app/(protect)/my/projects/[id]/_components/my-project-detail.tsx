@@ -3,6 +3,7 @@ import {
   UserAvatar,
   profileSelectForUserAvatar,
 } from "@/app/(protect)/_components/user-avater";
+import { ErrorMessage } from "@/components/error-message";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,6 +18,7 @@ import {
   projectSelectForMyProjectMemberList,
 } from "./my-project-member-list";
 import { MyProjectOverview } from "./my-project-overview";
+import { MyProjectSetting } from "./my-project-setting";
 import { MyProjectSprintList } from "./my-project-sprint-list";
 import { MyProjectSprintNoticeBadge } from "./my-project-sprint-notice-badge";
 import { MyProjectThreadList } from "./my-project-thread-list";
@@ -35,7 +37,7 @@ export async function MyProjectDetail({
   const project = await getProjectDetail(projectId);
 
   if (!project) {
-    return <div>プロジェクトが見つかりません。</div>;
+    return <ErrorMessage code={404} />;
   }
 
   const owners = project.projectMembers.filter(
@@ -124,7 +126,7 @@ export async function MyProjectDetail({
             )}
           </TabsContent>
           <TabsContent value="settings">
-            {tab === "settings" && <>設定（Protected） 削除機能など</>}
+            {tab === "settings" && <MyProjectSetting projectId={project.id} />}
           </TabsContent>
         </Tabs>
       </CardContent>
