@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileTextIcon } from "lucide-react";
 import ReactMarkdown, { Components } from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 export function MarkdownIndexes({ content }: { content: string }) {
   return (
@@ -13,7 +15,11 @@ export function MarkdownIndexes({ content }: { content: string }) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ReactMarkdown allowedElements={["h1", "h2"]} components={components}>
+        <ReactMarkdown
+          allowedElements={["h1", "h2"]}
+          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          components={components}
+        >
           {content}
         </ReactMarkdown>
       </CardContent>
