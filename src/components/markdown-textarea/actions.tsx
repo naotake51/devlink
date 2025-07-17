@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { actionClient } from "@/lib/safe-action";
 import { zfd } from "zod-form-data";
 
+const USER_UPLOAD_BUCKET = "user-upload";
 const MAX_UPLOAD_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
 
@@ -30,10 +31,10 @@ export const uploadFiles = actionClient
     const result = await Promise.all(
       files.map(async (file) => {
         const extension = file.name.split(".").pop();
-        const filePath = `${crypto.randomUUID()}-${Date.now()}.${extension}`;
+        const filePath = `${crypto.randomUUID()}_${Date.now()}.${extension}`;
 
         const { error } = await supabase.storage
-          .from("images")
+          .from(USER_UPLOAD_BUCKET)
           .upload(filePath, file);
 
         if (error) {
@@ -42,7 +43,7 @@ export const uploadFiles = actionClient
         }
 
         const { data } = await supabase.storage
-          .from("images")
+          .from(USER_UPLOAD_BUCKET)
           .getPublicUrl(filePath);
 
         return {
