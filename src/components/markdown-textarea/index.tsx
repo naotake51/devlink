@@ -23,7 +23,7 @@ export function MarkdownTextarea({
     if (files.length === 0) {
       return;
     }
-    if (files.length >= MAX_UPLOAD_FILE_COUNT) {
+    if (files.length > MAX_UPLOAD_FILE_COUNT) {
       toast.error(
         `ファイルは一度に${MAX_UPLOAD_FILE_COUNT}つまでしかアップロードできません。`,
       );
