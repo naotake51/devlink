@@ -10,7 +10,9 @@ import prisma from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import merge from "lodash.merge";
 import Link from "next/link";
+import { Suspense } from "react";
 import "server-only";
+import Loading from "../../../loading";
 import { ProjectApplicationModal } from "./project-application-modal";
 import { ProjectDevPoint } from "./project-dev-point";
 import {
@@ -88,22 +90,24 @@ export async function ProjectDetail({ projectId, tab }: ProjectDetailProps) {
               <Link href={"?tab=thread"}>メッセージ</Link>
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="overview">
-            {tab === "overview" && (
-              <ProjectOverview content={project.description} />
-            )}
-          </TabsContent>
-          <TabsContent value="members">
-            {tab === "members" && <ProjectMemberList project={project} />}
-          </TabsContent>
-          <TabsContent value="dev-point">
-            {tab === "dev-point" && <ProjectDevPoint project={project} />}
-          </TabsContent>
-          <TabsContent value="thread">
-            {tab === "thread" && (
-              <ProjectThread projectId={projectId} profileId={user.id} />
-            )}
-          </TabsContent>
+          <Suspense fallback={<Loading />}>
+            <TabsContent value="overview">
+              {tab === "overview" && (
+                <ProjectOverview content={project.description} />
+              )}
+            </TabsContent>
+            <TabsContent value="members">
+              {tab === "members" && <ProjectMemberList project={project} />}
+            </TabsContent>
+            <TabsContent value="dev-point">
+              {tab === "dev-point" && <ProjectDevPoint project={project} />}
+            </TabsContent>
+            <TabsContent value="thread">
+              {tab === "thread" && (
+                <ProjectThread projectId={projectId} profileId={user.id} />
+              )}
+            </TabsContent>
+          </Suspense>
         </Tabs>
       </CardContent>
     </Card>

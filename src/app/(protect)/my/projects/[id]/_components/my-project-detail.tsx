@@ -11,7 +11,9 @@ import prisma from "@/lib/prisma";
 import merge from "lodash.merge";
 import { FilePenLineIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 import "server-only";
+import Loading from "../../../../loading";
 import { MyProjectDevPoint } from "./my-project-dev-point";
 import {
   MyProjectMemberList,
@@ -98,36 +100,40 @@ export async function MyProjectDetail({
               <Link href={"?tab=settings"}>設定</Link>
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="overview">
-            {tab === "overview" && (
-              <MyProjectOverview content={project.description ?? ""} />
-            )}
-          </TabsContent>
-          <TabsContent value="members">
-            {tab === "members" && <MyProjectMemberList project={project} />}
-          </TabsContent>
-          <TabsContent value="dev-point">
-            {tab === "dev-point" && <MyProjectDevPoint project={project} />}
-          </TabsContent>
-          <TabsContent value="sprints">
-            {tab === "sprints" && <MyProjectSprintList project={project} />}
-          </TabsContent>
-          <TabsContent value="thread">
-            {tab === "thread" && (
-              <MyProjectThreadList projectId={project.id} threadId={thread} />
-            )}
-          </TabsContent>
-          <TabsContent value="resolutions">
-            {tab === "resolutions" && (
-              <>
-                決議（Protected）
-                メンバー採用・メンバー解雇・プロジェクト方針決定など
-              </>
-            )}
-          </TabsContent>
-          <TabsContent value="settings">
-            {tab === "settings" && <MyProjectSetting projectId={project.id} />}
-          </TabsContent>
+          <Suspense fallback={<Loading />}>
+            <TabsContent value="overview">
+              {tab === "overview" && (
+                <MyProjectOverview content={project.description ?? ""} />
+              )}
+            </TabsContent>
+            <TabsContent value="members">
+              {tab === "members" && <MyProjectMemberList project={project} />}
+            </TabsContent>
+            <TabsContent value="dev-point">
+              {tab === "dev-point" && <MyProjectDevPoint project={project} />}
+            </TabsContent>
+            <TabsContent value="sprints">
+              {tab === "sprints" && <MyProjectSprintList project={project} />}
+            </TabsContent>
+            <TabsContent value="thread">
+              {tab === "thread" && (
+                <MyProjectThreadList projectId={project.id} threadId={thread} />
+              )}
+            </TabsContent>
+            <TabsContent value="resolutions">
+              {tab === "resolutions" && (
+                <>
+                  決議（Protected）
+                  メンバー採用・メンバー解雇・プロジェクト方針決定など
+                </>
+              )}
+            </TabsContent>
+            <TabsContent value="settings">
+              {tab === "settings" && (
+                <MyProjectSetting projectId={project.id} />
+              )}
+            </TabsContent>
+          </Suspense>
         </Tabs>
       </CardContent>
     </Card>
