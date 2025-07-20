@@ -18,8 +18,8 @@ const errors = {
     illustration: "🚫",
   },
   404: {
-    title: "ページが見つかりません",
-    description: "お探しのページは存在しないか、移動された可能性があります。",
+    title: "リソースが見つかりません",
+    description: "お探しのリソースは存在しないか、削除された可能性があります。",
     illustration: "🔍",
   },
   500: {

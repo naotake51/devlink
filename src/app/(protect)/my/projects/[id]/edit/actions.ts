@@ -34,7 +34,7 @@ export const updateProject = actionClient
       });
     });
 
-    const path = `/my/projects/${data.id}`;
+    const path = `/my/projects/${data.id}/overview`;
     revalidatePath(path);
     redirect(path);
   });

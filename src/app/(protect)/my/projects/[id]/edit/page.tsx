@@ -22,7 +22,7 @@ const EditMyProjectPage = async ({
 
   return (
     <div>
-      <Link href={`/my/projects/${id}`}>
+      <Link href={`/my/projects/${id}/overview`}>
         <p className="text-md font-bold mb-4 flex items-center gap-2">
           <ChevronLeftIcon />
           プロジェクト詳細へ戻る

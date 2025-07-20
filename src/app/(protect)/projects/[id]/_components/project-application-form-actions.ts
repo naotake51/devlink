@@ -80,6 +80,6 @@ export const submitApplication = actionClient
       });
     });
 
-    revalidatePath(`/projects/${projectId}`);
-    redirect(`/projects/${projectId}`);
+    revalidatePath(`/projects/${projectId}/overview`);
+    redirect(`/projects/${projectId}/overview`);
   });
