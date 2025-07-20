@@ -82,7 +82,7 @@ export function MyProjectCard({ project }: MyProjectCardProps) {
       </CardContent>
       <CardFooter>
         <Button asChild variant="outline" size="sm" className="w-full">
-          <Link href={`/my/projects/${project.id}`}>詳細を見る</Link>
+          <Link href={`/my/projects/${project.id}/overview`}>詳細を見る</Link>
         </Button>
       </CardFooter>
     </Card>
