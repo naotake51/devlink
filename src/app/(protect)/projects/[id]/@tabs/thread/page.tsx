@@ -34,9 +34,6 @@ export default async function ProjectThread({ params }: ProjectThreadProps) {
   }
 
   const thread = await getProjectThread(id, user.id);
-  if (!thread) {
-    return <ErrorMessage code={404} />;
-  }
 
   const messages = thread?.messages || [];
 
