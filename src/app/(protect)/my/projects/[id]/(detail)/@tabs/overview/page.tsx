@@ -3,7 +3,7 @@ import { Markdown } from "@/components/markdown";
 import { MarkdownIndexes } from "@/components/markdown-indexes";
 import prisma from "@/lib/prisma";
 import "server-only";
-import z from "zod";
+import { z } from "zod";
 
 const paramsSchema = z.object({
   id: z.string().uuid(),

@@ -10,7 +10,7 @@ import prisma from "@/lib/prisma";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import "server-only";
-import z from "zod";
+import { z } from "zod";
 
 const paramsSchema = z.object({
   id: z.string().uuid(),

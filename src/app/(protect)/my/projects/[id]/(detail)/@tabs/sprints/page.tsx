@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@/components/error-message";
 import prisma from "@/lib/prisma";
 import "server-only";
-import z from "zod";
+import { z } from "zod";
 import { ProjectSprint } from "./_components/project-sprint";
 
 const paramsSchema = z.object({

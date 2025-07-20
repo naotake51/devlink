@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@/components/error-message";
-import z from "zod";
+import { z } from "zod";
 import { ProjectDeleteModal } from "./_components/project-delete-modal";
 
 const paramsSchema = z.object({

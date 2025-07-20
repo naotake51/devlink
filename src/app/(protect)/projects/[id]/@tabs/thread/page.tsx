@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import prisma from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import "server-only";
-import z from "zod";
+import { z } from "zod";
 import { MessageForm } from "./_components/message-form";
 
 const paramsSchema = z.object({

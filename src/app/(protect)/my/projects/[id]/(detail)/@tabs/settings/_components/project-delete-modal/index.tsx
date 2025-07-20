@@ -23,7 +23,7 @@ import { LoaderIcon, TrashIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
+import { z } from "zod";
 import { deleteProject } from "./actions"; // Correct relative path to actions.ts
 
 const DeleteProjectSchema = z.object({

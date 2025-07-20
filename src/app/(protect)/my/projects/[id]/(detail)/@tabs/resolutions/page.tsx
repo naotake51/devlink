@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@/components/error-message";
-import z from "zod";
+import { z } from "zod";
 
 const paramsSchema = z.object({
   id: z.string().uuid(),
