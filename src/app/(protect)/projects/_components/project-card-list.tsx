@@ -1,13 +1,13 @@
-import prisma from "@/lib/prisma";
+import { getProjectsByQuery } from "@/utils/data/project";
 import "server-only";
-import { ProjectCard, projectSelectForProjectCard } from "./project-card";
+import { ProjectCard } from "./project-card";
 
 interface ProjectCardListProps {
   query?: string;
 }
 
 export async function ProjectCardList({ query }: ProjectCardListProps) {
-  const projects = await searchProjects(query ? query.trim() : undefined);
+  const projects = await getProjectsByQuery(query ? query.trim() : undefined);
 
   return (
     <>
@@ -23,44 +23,4 @@ export async function ProjectCardList({ query }: ProjectCardListProps) {
       </div>
     </>
   );
-}
-
-async function searchProjects(query?: string) {
-  const projects = await prisma.project.findMany({
-    select: {
-      ...{
-        id: true,
-      },
-      ...projectSelectForProjectCard,
-    },
-    where: {
-      /**
-       * TODO::
-       * 全角・半角、かな、カタカナなどあいまいな検索を実装する。
-       * 将来的にはインデックス（転置）が必要になる。
-       * PGroongaの使用を検討する。
-       */
-      OR: query
-        ? [
-            {
-              title: {
-                contains: query,
-                mode: "insensitive",
-              },
-            },
-            {
-              description: {
-                contains: query,
-                mode: "insensitive",
-              },
-            },
-          ]
-        : undefined,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  return projects;
 }

@@ -71,3 +71,55 @@ export const getProjectApplication = cache(
     return application;
   },
 );
+
+export const getProjectsByQuery = cache(async (query?: string) => {
+  const projects = await prisma.project.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      startDate: true,
+      projectMembers: {
+        select: {
+          role: true,
+          profile: {
+            select: {
+              id: true,
+              displayName: true,
+              avatarUrl: true,
+            },
+          },
+        },
+      },
+    },
+    where: {
+      /**
+       * TODO::
+       * 全角・半角、かな、カタカナなどあいまいな検索を実装する。
+       * 将来的にはインデックス（転置）が必要になる。
+       * PGroongaの使用を検討する。
+       */
+      OR: query
+        ? [
+            {
+              title: {
+                contains: query,
+                mode: "insensitive",
+              },
+            },
+            {
+              description: {
+                contains: query,
+                mode: "insensitive",
+              },
+            },
+          ]
+        : undefined,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return projects;
+});

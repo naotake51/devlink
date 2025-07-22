@@ -1,8 +1,5 @@
-import { Prisma, ProjectMemberRole } from "@/__generated__/prisma";
-import {
-  UserAvatar,
-  profileSelectForUserAvatar,
-} from "@/app/(protect)/_components/user-avater";
+import { ProjectMemberRole } from "@/__generated__/prisma";
+import { UserAvatar } from "@/app/(protect)/_components/user-avater";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,37 +9,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import merge from "lodash.merge";
 import Link from "next/link";
 import "server-only";
 
-/**
- * @package
- */
-export const projectSelectForMyProjectCard = {
-  id: true,
-  title: true,
-  description: true,
-  startDate: true,
-  projectMembers: {
-    select: {
-      role: true,
-      profile: {
-        select: merge(
-          { id: true, displayName: true } satisfies Prisma.ProfileSelect,
-          profileSelectForUserAvatar,
-        ),
-      },
-    },
-  },
-} satisfies Prisma.ProjectSelect;
-
-type ProjectPayloadForMyProjectCard = Prisma.ProjectGetPayload<{
-  select: typeof projectSelectForMyProjectCard;
-}>;
-
 interface MyProjectCardProps {
-  project: ProjectPayloadForMyProjectCard;
+  project: {
+    id: string;
+    title: string;
+    description: string | null;
+    startDate: Date;
+    projectMembers: Array<{
+      role: ProjectMemberRole;
+      profile: {
+        id: string;
+        displayName: string;
+        avatarUrl: string | null;
+      };
+    }>;
+  };
 }
 
 /**

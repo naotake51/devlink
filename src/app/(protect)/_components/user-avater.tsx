@@ -1,19 +1,8 @@
-import { Prisma } from "@/__generated__/prisma";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import clsx from "clsx";
-
-export const profileSelectForUserAvatar = {
-  id: true,
-  displayName: true,
-  avatarUrl: true,
-} satisfies Prisma.ProfileSelect;
-
-type ProfilePayloadForUserAvatar = Prisma.ProfileGetPayload<{
-  select: typeof profileSelectForUserAvatar;
-}>;
 
 const getFallbackAvatarInitial = (displayName: string) =>
   displayName.charAt(0).toUpperCase() ?? "U";
@@ -62,7 +51,11 @@ const userAvatarVariants = cva("", {
 export interface UserAvatarProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof userAvatarVariants> {
-  profile: ProfilePayloadForUserAvatar;
+  profile: {
+    id: string;
+    displayName: string;
+    avatarUrl?: string | null;
+  };
 }
 
 export function UserAvatar({ className, size, profile }: UserAvatarProps) {

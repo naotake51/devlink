@@ -4,10 +4,7 @@ import prisma from "@/lib/prisma";
 import { getAuthUser } from "@/utils/data/auth";
 import { FilePenLineIcon } from "lucide-react";
 import Link from "next/link";
-import {
-  MyProjectCard,
-  projectSelectForMyProjectCard,
-} from "./my-project-card";
+import { MyProjectCard } from "./my-project-card";
 
 export async function MyProjectCardList() {
   const projects = await getMyProjects();
@@ -48,7 +45,22 @@ async function getMyProjects() {
         select: {
           project: {
             select: {
-              ...projectSelectForMyProjectCard,
+              id: true,
+              title: true,
+              description: true,
+              startDate: true,
+              projectMembers: {
+                select: {
+                  role: true,
+                  profile: {
+                    select: {
+                      id: true,
+                      displayName: true,
+                      avatarUrl: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },

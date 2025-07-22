@@ -6,12 +6,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import prisma from "@/lib/prisma";
+import { getProfile } from "@/utils/data/profile";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import "server-only";
-import { UserAvatar, profileSelectForUserAvatar } from "./user-avater";
+import { UserAvatar } from "./user-avater";
 
 interface UserMenuProps {
   userId: string;
@@ -55,15 +55,4 @@ export async function UserMenu({ userId }: UserMenuProps) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-async function getProfile(userId: string) {
-  const profile = await prisma.profile.findUnique({
-    where: {
-      id: userId,
-    },
-    select: profileSelectForUserAvatar,
-  });
-
-  return profile;
 }

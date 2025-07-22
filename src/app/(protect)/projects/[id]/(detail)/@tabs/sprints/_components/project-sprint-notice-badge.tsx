@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import { today } from "@/lib/date-utils";
-import prisma from "@/lib/prisma";
 import { getAuthUser } from "@/utils/data/auth";
+import { getVote, getVotingSprint } from "@/utils/data/sprint";
 import "server-only";
 
 type ProjectSprintNoticeBadgeProps = {
@@ -27,34 +26,4 @@ export async function ProjectSprintNoticeBadge({
       1
     </Badge>
   );
-}
-
-async function getVotingSprint(projectId: string) {
-  const _today = today();
-
-  return await prisma.sprint.findFirst({
-    where: {
-      projectId: projectId,
-      voteStartDate: {
-        lte: _today,
-      },
-      voteEndDate: {
-        gte: _today,
-      },
-    },
-    select: {
-      id: true,
-    },
-  });
-}
-
-async function getVote(sprintId: string, userId: string) {
-  return await prisma.sprintVote.findFirst({
-    where: {
-      sprintId: sprintId,
-      member: {
-        profileId: userId,
-      },
-    },
-  });
 }
