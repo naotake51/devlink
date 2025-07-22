@@ -38,7 +38,7 @@ export const getProjectMember = cache(
 export const getProjectMembers = cache(async (projectId: string) => {
   const project = await prisma.projectMember.findMany({
     where: {
-      id: projectId,
+      projectId: projectId,
     },
     select: {
       role: true,
