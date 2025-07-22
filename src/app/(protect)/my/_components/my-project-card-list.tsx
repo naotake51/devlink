@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import prisma from "@/lib/prisma";
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/data/auth";
 import { FilePenLineIcon } from "lucide-react";
 import Link from "next/link";
 import {
@@ -34,12 +34,7 @@ export async function MyProjectCardList() {
 }
 
 async function getMyProjects() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await getAuthUser();
   if (!user) {
     throw new Error("Failed to retrieve authenticated user");
   }

@@ -3,7 +3,7 @@
 import { ProjectApplicationStatus } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/data/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -18,11 +18,7 @@ export const submitApplication = actionClient
   .action(async ({ parsedInput }) => {
     const { message, projectId } = parsedInput;
 
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
+    const user = await getAuthUser();
     if (!user) {
       throw new Error("認証が必要です");
     }

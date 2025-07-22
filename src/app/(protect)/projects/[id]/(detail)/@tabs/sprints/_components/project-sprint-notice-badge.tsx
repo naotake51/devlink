@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { today } from "@/lib/date-utils";
 import prisma from "@/lib/prisma";
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/data/auth";
 import "server-only";
 
 type ProjectSprintNoticeBadgeProps = {
@@ -11,15 +11,15 @@ type ProjectSprintNoticeBadgeProps = {
 export async function ProjectSprintNoticeBadge({
   projectId,
 }: ProjectSprintNoticeBadgeProps) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
 
   const sprint = await getVotingSprint(projectId);
   if (!sprint) return null;
 
-  const vote = await getVote(sprint.id, user!.id);
+  const vote = await getVote(sprint.id, user.id);
   if (vote) return null;
 
   return (

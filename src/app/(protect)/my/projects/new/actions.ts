@@ -3,7 +3,7 @@
 import { ProjectMemberRole } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/data/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NewProjectSchema } from "./schema";
@@ -13,11 +13,7 @@ export const createProject = actionClient
   .action(async ({ parsedInput }) => {
     const data = parsedInput;
 
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
+    const user = await getAuthUser();
     if (!user) {
       throw new Error("User not authenticated");
     }

@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { today } from "@/lib/date-utils";
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/data/auth";
 import "server-only";
 
 interface ProjectSprintProps {
@@ -31,17 +31,17 @@ interface ProjectSprintProps {
 }
 
 export async function ProjectSprint({ sprint }: ProjectSprintProps) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
 
   const _today = today();
   const isVotePeriod =
     _today >= sprint.voteStartDate && _today <= sprint.voteEndDate;
 
   const hasMyVote = sprint.sprintVotes.some(
-    (vote) => vote.member.profileId === user!.id,
+    (vote) => vote.member.profileId === user.id,
   );
 
   const isProjectMember = true; // TODO

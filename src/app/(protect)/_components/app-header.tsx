@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/data/auth";
 import { ReactNode } from "react";
 import "server-only";
 import { UserMenu } from "./user-menu";
@@ -8,11 +8,7 @@ export interface AppHeaderProps {
 }
 
 export async function AppHeader({ children }: AppHeaderProps) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await getAuthUser();
   if (!user) {
     throw new Error("User not found");
   }

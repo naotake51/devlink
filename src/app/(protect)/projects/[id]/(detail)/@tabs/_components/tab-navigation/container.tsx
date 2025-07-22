@@ -1,5 +1,6 @@
 import { getAuthUser } from "@/utils/data/auth";
 import { getProjectMember } from "@/utils/data/project";
+import "server-only";
 import { TabNavigationPresentational } from "./presentational";
 
 interface TabNavigationContainerProps {
