@@ -3,7 +3,7 @@ import { cache } from "react";
 import "server-only";
 
 export const getSprints = cache(async (projectId: string) => {
-  const sprint = prisma.sprint.findMany({
+  const sprint = await prisma.sprint.findMany({
     where: {
       projectId,
     },
