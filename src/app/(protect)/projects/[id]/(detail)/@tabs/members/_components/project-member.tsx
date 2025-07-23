@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import {
   Card,
   CardContent,

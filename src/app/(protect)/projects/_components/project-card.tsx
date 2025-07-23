@@ -1,5 +1,5 @@
 import { ProjectMemberRole } from "@/__generated__/prisma";
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,

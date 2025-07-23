@@ -6,7 +6,7 @@ import { getProfileWithProjects } from "@/utils/data/profile";
 import { FilePenLineIcon } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
-import { UserAvatar } from "../../_components/user-avater";
+import { UserAvatar } from "../../_components/user-avatar";
 
 const paramsSchema = z.object({
   userId: z.string().uuid(),

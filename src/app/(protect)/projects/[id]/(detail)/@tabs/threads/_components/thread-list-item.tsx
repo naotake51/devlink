@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

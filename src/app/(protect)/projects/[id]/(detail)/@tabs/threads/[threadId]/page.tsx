@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { MessageForm } from "@/app/(protect)/projects/[id]/(detail)/@tabs/thread/_components/message-form";
 import { ErrorMessage } from "@/components/error-message";
 import { Markdown } from "@/components/markdown";

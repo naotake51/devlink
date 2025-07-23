@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { ErrorMessage } from "@/components/error-message";
 import { Markdown } from "@/components/markdown";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

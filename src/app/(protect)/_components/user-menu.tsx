@@ -11,7 +11,7 @@ import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import "server-only";
-import { UserAvatar } from "./user-avater";
+import { UserAvatar } from "./user-avatar";
 
 interface UserMenuProps {
   userId: string;
