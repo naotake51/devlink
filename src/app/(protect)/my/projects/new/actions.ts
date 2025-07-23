@@ -4,7 +4,6 @@ import { ProjectMemberRole } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
 import { getAuthUser } from "@/utils/data/auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NewProjectSchema } from "./schema";
 
@@ -38,6 +37,5 @@ export const createProject = actionClient
       });
     });
 
-    revalidatePath("/my");
     redirect("/my");
   });

@@ -4,7 +4,6 @@ import { ProjectMemberRole } from "@/__generated__/prisma/index";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
 import { getAuthUser } from "@/utils/data/auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -42,6 +41,5 @@ export const deleteProject = actionClient
 
     await prisma.project.delete({ where: { id: projectId } });
 
-    revalidatePath("/my");
     redirect("/my");
   });

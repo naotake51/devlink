@@ -4,7 +4,6 @@ import { ProjectApplicationStatus } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
 import { getAuthUser } from "@/utils/data/auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { ProjectApplicationSchema } from "./project-application-form-schema";
@@ -76,6 +75,5 @@ export const submitApplication = actionClient
       });
     });
 
-    revalidatePath(`/projects/${projectId}/overview`);
     redirect(`/projects/${projectId}/overview`);
   });

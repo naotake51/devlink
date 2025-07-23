@@ -3,7 +3,6 @@
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
 import { getAuthUser } from "@/utils/data/auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { EditProjectSchema } from "./schema";
 
@@ -30,7 +29,5 @@ export const updateProject = actionClient
       });
     });
 
-    const path = `/projects/${data.id}/overview`;
-    revalidatePath(path);
-    redirect(path);
+    redirect(`/projects/${data.id}/overview`);
   });

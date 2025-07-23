@@ -12,6 +12,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon, SendIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { sendMessage } from "./actions";
@@ -23,6 +24,8 @@ interface MessageFormProps {
 }
 
 export function MessageForm({ projectId, threadProfileId }: MessageFormProps) {
+  const router = useRouter();
+
   const form = useForm<MessageFormInput>({
     resolver: zodResolver(messageFormSchema),
     defaultValues: {
@@ -34,6 +37,7 @@ export function MessageForm({ projectId, threadProfileId }: MessageFormProps) {
     onSuccess: () => {
       toast.success("メッセージを送信しました！");
       form.reset();
+      router.refresh();
     },
     onError: ({ error }) => {
       console.error("Message send error:", error);

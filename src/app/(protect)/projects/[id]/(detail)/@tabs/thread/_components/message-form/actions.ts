@@ -3,7 +3,6 @@
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
 import { getAuthUser } from "@/utils/data/auth";
-import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { messageFormSchema } from "./schema";
 
@@ -58,6 +57,5 @@ export const sendMessage = actionClient
       });
     });
 
-    revalidatePath(`/projects/${projectId}`);
     return { success: true };
   });

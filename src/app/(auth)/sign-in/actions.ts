@@ -2,7 +2,6 @@
 
 import { actionClient } from "@/lib/safe-action";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import "server-only";
 import { signInSchema } from "./schema";
@@ -25,7 +24,6 @@ export const signIn = actionClient
       return { failure: error.message };
     }
 
-    revalidatePath("/projects", "layout");
     redirect("/projects");
   });
 
