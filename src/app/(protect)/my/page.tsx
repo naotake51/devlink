@@ -1,16 +1,11 @@
-import { UserIcon } from "lucide-react";
-import { MyProjectCardList } from "./_components/my-project-card-list";
+import { getAuthUser } from "@/utils/data/auth";
+import { redirect } from "next/navigation";
 
-export default function MyPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6 flex items-center gap-2">
-        <UserIcon />
-        マイページ
-      </h1>
-      <div className="space-y-4">
-        <MyProjectCardList />
-      </div>
-    </div>
-  );
+export default async function MyPage() {
+  const user = await getAuthUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  redirect(`/users/${user.id}`);
 }

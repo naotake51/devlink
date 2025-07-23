@@ -1,5 +1,5 @@
 import { ProjectMemberRole } from "@/__generated__/prisma";
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { ErrorMessage } from "@/components/error-message";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -93,7 +93,7 @@ export default async function ProjectDetailLayout({
             <div className="flex items-center gap-4">
               {owners.map((owner) => (
                 <div className="flex items-center gap-2" key={owner.profile.id}>
-                  <UserAvatar profile={owner.profile} />
+                  <UserAvatar profile={owner.profile} hasLink />
                   <p className="text-sm font-medium">
                     {owner.profile.displayName}
                   </p>

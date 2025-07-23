@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ export function ProjectMember({ projectMember }: ProjectMemberProps) {
       <CardHeader className="w-[250px]">
         <CardTitle className="w-[250px]">
           <div className="flex items-center gap-2 overflow-hidden">
-            <UserAvatar profile={projectMember.profile} size="lg" />
+            <UserAvatar profile={projectMember.profile} size="lg" hasLink />
             <span className="truncate text-lg">
               {projectMember.profile.displayName}
             </span>

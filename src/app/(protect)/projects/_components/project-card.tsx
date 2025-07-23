@@ -1,5 +1,5 @@
 import { ProjectMemberRole } from "@/__generated__/prisma";
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,21 +12,23 @@ import {
 import Link from "next/link";
 import "server-only";
 
+export interface ProjectCardPropsProject {
+  id: string;
+  title: string;
+  description: string | null;
+  startDate: Date;
+  projectMembers: {
+    role: ProjectMemberRole;
+    profile: {
+      id: string;
+      displayName: string;
+      avatarUrl: string | null;
+    };
+  }[];
+}
+
 interface ProjectCardProps {
-  project: {
-    id: string;
-    title: string;
-    description: string | null;
-    startDate: Date;
-    projectMembers: Array<{
-      role: ProjectMemberRole;
-      profile: {
-        id: string;
-        displayName: string;
-        avatarUrl: string | null;
-      };
-    }>;
-  };
+  project: ProjectCardPropsProject;
 }
 
 /**
@@ -51,10 +53,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <CardContent className="space-y-2">
         <div className="flex items-center gap-4">
           {owners.map((owner) => (
-            <div className="flex items-center gap-2" key={owner.profile.id}>
-              <UserAvatar profile={owner.profile} />
-              <p className="text-sm font-medium">{owner.profile.displayName}</p>
-            </div>
+            <UserAvatar
+              key={owner.profile.id}
+              profile={owner.profile}
+              hasLink
+              hasTooltip
+            />
           ))}
         </div>
         {project.description && (

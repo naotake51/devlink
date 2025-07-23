@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/app/(protect)/_components/user-avater";
+import { UserAvatar } from "@/app/(protect)/_components/user-avatar";
 import { MessageForm } from "@/app/(protect)/projects/[id]/(detail)/@tabs/thread/_components/message-form";
 import { ErrorMessage } from "@/components/error-message";
 import { Markdown } from "@/components/markdown";
@@ -73,7 +73,7 @@ export default async function SelectedThread({ params }: SelectedThreadProps) {
                 <div key={message.id}>
                   <div className="flex gap-3 hover:bg-gray-50/50 p-2 rounded-lg transition-colors">
                     <div className="flex-shrink-0 mt-1">
-                      <UserAvatar profile={message.sender} size="sm" />
+                      <UserAvatar profile={message.sender} size="sm" hasLink />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline gap-2 mb-1">
