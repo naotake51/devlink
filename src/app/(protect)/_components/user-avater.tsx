@@ -1,8 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import clsx from "clsx";
+import Link from "next/link";
 
 const getFallbackAvatarInitial = (displayName: string) =>
   displayName.charAt(0).toUpperCase() ?? "U";
@@ -35,7 +41,7 @@ const getFallbackAvatarColorClass = (id: string): string => {
   return colors[index];
 };
 
-const userAvatarVariants = cva("", {
+const userAvatarVariants = cva("bg-white border-1", {
   variants: {
     size: {
       sm: "size-6",
@@ -56,10 +62,18 @@ export interface UserAvatarProps
     displayName: string;
     avatarUrl?: string | null;
   };
+  hasLink?: boolean;
+  hasTooltip?: boolean;
 }
 
-export function UserAvatar({ className, size, profile }: UserAvatarProps) {
-  return (
+export function UserAvatar({
+  className,
+  size,
+  profile,
+  hasLink = false,
+  hasTooltip = false,
+}: UserAvatarProps) {
+  let avatar = (
     <Avatar className={cn(userAvatarVariants({ size, className }))}>
       <AvatarImage
         src={profile.avatarUrl ?? undefined}
@@ -81,4 +95,21 @@ export function UserAvatar({ className, size, profile }: UserAvatarProps) {
       </AvatarFallback>
     </Avatar>
   );
+
+  if (hasLink) {
+    avatar = <Link href={`/users/${profile.id}`}>{avatar}</Link>;
+  }
+
+  if (hasTooltip) {
+    avatar = (
+      <Tooltip>
+        <TooltipTrigger asChild>{avatar}</TooltipTrigger>
+        <TooltipContent>
+          <p>{profile.displayName}</p>
+        </TooltipContent>
+      </Tooltip>
+    );
+  }
+
+  return avatar;
 }

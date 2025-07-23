@@ -1,5 +1,3 @@
-"use client";
-
 import { UserAvatar } from "@/app/(protect)/_components/user-avater";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";

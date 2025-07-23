@@ -1,4 +1,5 @@
 import { ErrorMessage } from "@/components/error-message";
+import { getProjectsByQuery } from "@/utils/data/project";
 import { SearchIcon } from "lucide-react";
 import "server-only";
 import { z } from "zod";
@@ -24,6 +25,8 @@ export default async function ProjectsPage({
   }
   const { q: query } = q.data;
 
+  const projects = await getProjectsByQuery(query ? query.trim() : undefined);
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -32,7 +35,12 @@ export default async function ProjectsPage({
       </h1>
       <div className="space-y-4">
         <ProjectSearchForm />
-        <ProjectCardList query={query} />
+        <div className="text-sm text-muted-foreground mb-4">
+          {query
+            ? `「${query}」で検索した結果、${projects.length} 件のプロジェクトが見つかりました。`
+            : `${projects.length} 件のプロジェクトがあります。`}
+        </div>{" "}
+        <ProjectCardList projects={projects} />
       </div>
     </div>
   );

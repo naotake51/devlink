@@ -93,7 +93,7 @@ export default async function ProjectDetailLayout({
             <div className="flex items-center gap-4">
               {owners.map((owner) => (
                 <div className="flex items-center gap-2" key={owner.profile.id}>
-                  <UserAvatar profile={owner.profile} />
+                  <UserAvatar profile={owner.profile} hasLink />
                   <p className="text-sm font-medium">
                     {owner.profile.displayName}
                   </p>
