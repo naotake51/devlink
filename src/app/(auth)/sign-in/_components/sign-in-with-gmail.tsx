@@ -43,7 +43,9 @@ export function SignInWithGmail() {
           height={16}
         />
         Gmailでログイン
-        {status === "executing" && <LoaderIcon className="animate-spin" />}
+        {(status === "executing" || status === "transitioning") && (
+          <LoaderIcon className="animate-spin" />
+        )}
       </Button>
     </>
   );

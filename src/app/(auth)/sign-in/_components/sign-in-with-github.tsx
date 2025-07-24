@@ -43,7 +43,9 @@ export function SignInWithGithub() {
           height={16}
         />
         Githubでログイン
-        {status === "executing" && <LoaderIcon className="animate-spin" />}
+        {(status === "executing" || status === "transitioning") && (
+          <LoaderIcon className="animate-spin" />
+        )}
       </Button>
     </>
   );
