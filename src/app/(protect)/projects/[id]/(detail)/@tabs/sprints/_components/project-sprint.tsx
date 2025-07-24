@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { today } from "@/lib/date-utils";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import "server-only";
 
 interface ProjectSprintProps {
@@ -31,10 +31,7 @@ interface ProjectSprintProps {
 }
 
 export async function ProjectSprint({ sprint }: ProjectSprintProps) {
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
+  const user = await verifyAuthUser();
 
   const _today = today();
   const isVotePeriod =

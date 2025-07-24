@@ -3,7 +3,7 @@
 import { ProjectMemberRole } from "@/__generated__/prisma/index";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -16,10 +16,7 @@ export const deleteProject = actionClient
   .action(async ({ parsedInput }) => {
     const { projectId } = parsedInput;
 
-    const user = await getAuthUser();
-    if (!user) {
-      throw new Error("ユーザーが認証されていません。");
-    }
+    const user = await verifyAuthUser();
 
     const project = await prisma.project.findUnique({
       select: {

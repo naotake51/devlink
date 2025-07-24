@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { getVote, getVotingSprint } from "@/utils/data/sprint";
 import "server-only";
 
@@ -10,10 +10,7 @@ type ProjectSprintNoticeBadgeProps = {
 export async function ProjectSprintNoticeBadge({
   projectId,
 }: ProjectSprintNoticeBadgeProps) {
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
+  const user = await verifyAuthUser();
 
   const sprint = await getVotingSprint(projectId);
   if (!sprint) return null;

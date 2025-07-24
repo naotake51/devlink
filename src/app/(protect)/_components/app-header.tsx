@@ -1,4 +1,4 @@
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { ReactNode } from "react";
 import "server-only";
 import { UserMenu } from "./user-menu";
@@ -8,10 +8,7 @@ export interface AppHeaderProps {
 }
 
 export async function AppHeader({ children }: AppHeaderProps) {
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not found");
-  }
+  const user = await verifyAuthUser();
 
   return (
     <header className="py-4 px-4 border-b">

@@ -3,7 +3,7 @@ import { ErrorMessage } from "@/components/error-message";
 import { Markdown } from "@/components/markdown";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { getMessages, getThreadByUser } from "@/utils/data/thread";
 import "server-only";
 import { z } from "zod";
@@ -28,10 +28,7 @@ export default async function ProjectThread({ params }: ProjectThreadProps) {
   }
   const { id } = p.data;
 
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
+  const user = await verifyAuthUser();
 
   const thread = await getThreadByUser(id, user.id);
 

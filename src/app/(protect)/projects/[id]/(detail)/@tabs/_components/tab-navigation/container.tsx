@@ -1,4 +1,4 @@
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { getProjectMember } from "@/utils/data/project";
 import "server-only";
 import { TabNavigationPresentational } from "./presentational";
@@ -13,10 +13,7 @@ interface TabNavigationContainerProps {
 export async function TabNavigationContainer({
   projectId,
 }: TabNavigationContainerProps) {
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
+  const user = await verifyAuthUser();
 
   const projectMember = await getProjectMember(projectId, user.id);
 

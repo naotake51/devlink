@@ -4,7 +4,7 @@ import { ErrorMessage } from "@/components/error-message";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import {
   getProject,
   getProjectApplication,
@@ -67,10 +67,7 @@ export default async function ProjectDetailLayout({
   }
   const { id } = p.data;
 
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
+  const user = await verifyAuthUser();
 
   const [project, projectMembers, projectMember, projectApplication] =
     await Promise.all([

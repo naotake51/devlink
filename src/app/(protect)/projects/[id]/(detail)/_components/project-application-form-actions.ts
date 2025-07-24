@@ -3,7 +3,7 @@
 import { ProjectApplicationStatus } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { ProjectApplicationSchema } from "./project-application-form-schema";
@@ -17,10 +17,7 @@ export const submitApplication = actionClient
   .action(async ({ parsedInput }) => {
     const { message, projectId } = parsedInput;
 
-    const user = await getAuthUser();
-    if (!user) {
-      throw new Error("認証が必要です");
-    }
+    const user = await verifyAuthUser();
 
     const profile = await prisma.profile.findUnique({
       where: { id: user.id },

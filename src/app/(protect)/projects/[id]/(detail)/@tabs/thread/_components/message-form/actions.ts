@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { z } from "zod";
 import { messageFormSchema } from "./schema";
 
@@ -14,10 +14,7 @@ const sendMessageSchema = messageFormSchema.extend({
 export const sendMessage = actionClient
   .schema(sendMessageSchema)
   .action(async ({ parsedInput: { projectId, threadProfileId, message } }) => {
-    const user = await getAuthUser();
-    if (!user) {
-      throw new Error("認証が必要です");
-    }
+    const user = await verifyAuthUser();
 
     await prisma.$transaction(async (tx) => {
       const isUserThread = threadProfileId === user.id;

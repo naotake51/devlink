@@ -3,7 +3,7 @@
 import { ProjectMemberRole } from "@/__generated__/prisma";
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { redirect } from "next/navigation";
 import { NewProjectSchema } from "./schema";
 
@@ -12,10 +12,7 @@ export const createProject = actionClient
   .action(async ({ parsedInput }) => {
     const data = parsedInput;
 
-    const user = await getAuthUser();
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
+    const user = await verifyAuthUser();
 
     await prisma.$transaction(async (prisma) => {
       const createdProject = await prisma.project.create({

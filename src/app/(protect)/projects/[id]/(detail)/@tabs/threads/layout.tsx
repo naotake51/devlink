@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@/components/error-message";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { getProjectMember } from "@/utils/data/project";
 import { getLatestMessages, getThreads } from "@/utils/data/thread";
 import "server-only";
@@ -27,10 +27,7 @@ export default async function ProjectThreadsLayout({
   }
   const { id } = p.data;
 
-  const user = await getAuthUser();
-  if (!user) {
-    throw new Error("User not authenticated");
-  }
+  const user = await verifyAuthUser();
 
   const projectMember = await getProjectMember(id, user.id);
   if (!projectMember) {

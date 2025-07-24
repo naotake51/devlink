@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { actionClient } from "@/lib/safe-action";
-import { getAuthUser } from "@/utils/data/auth";
+import { verifyAuthUser } from "@/utils/data/auth";
 import { redirect } from "next/navigation";
 import { EditProjectSchema } from "./schema";
 
@@ -11,10 +11,7 @@ export const updateProject = actionClient
   .action(async ({ parsedInput }) => {
     const data = parsedInput;
 
-    const user = await getAuthUser();
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
+    await verifyAuthUser();
 
     await prisma.$transaction(async (prisma) => {
       await prisma.project.update({
