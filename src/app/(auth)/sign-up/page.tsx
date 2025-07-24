@@ -6,9 +6,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { Metadata } from "next";
 import Link from "next/link";
 import "server-only";
 import { SignUpForm } from "./_components/sign-up-form";
+
+/**
+ * @private
+ */
+export const metadata: Metadata = {
+  title: "アカウント作成",
+  description:
+    "DevLinkに新しいアカウントを作成して、プロジェクトに参加しましょう。",
+};
 
 /**
  * @private

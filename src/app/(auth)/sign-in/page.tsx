@@ -7,11 +7,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import type { Metadata } from "next";
 import Link from "next/link";
 import "server-only";
 import { SignInForm } from "./_components/sign-in-form";
 import { SignInWithGithub } from "./_components/sign-in-with-github";
 import { SignInWithGmail } from "./_components/sign-in-with-gmail";
+
+/**
+ * @private
+ */
+export const metadata: Metadata = {
+  title: "サインイン",
+  description:
+    "DevLinkにログインして、自分にあったプロジェクトに参加しましょう。",
+};
 
 /**
  * @private
