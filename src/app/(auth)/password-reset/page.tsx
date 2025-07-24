@@ -5,8 +5,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { Metadata } from "next";
 import "server-only";
 import { PasswordResetForm } from "./_components/password-reset-form";
+
+/**
+ * @private
+ */
+export const metadata: Metadata = {
+  title: "パスワードリセット",
+  description: "パスワードをリセットして、新しいパスワードを設定します。",
+};
 
 /**
  * @private

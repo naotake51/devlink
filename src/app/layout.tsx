@@ -17,7 +17,10 @@ const geistMono = Geist_Mono({
  * @private
  */
 export const metadata: Metadata = {
-  title: "DevLink - 開発者とデザイナーがつながる、協業のはじまり",
+  title: {
+    template: "%s | DevLink",
+    default: "DevLink",
+  },
   description:
     "DevLinkは、個人開発者・デザイナー・プランナーが初期段階から気軽にチームを組んで協業できるプラットフォームです。",
 };

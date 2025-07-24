@@ -20,6 +20,34 @@ const paramsSchema = z.object({
   id: z.string().uuid(),
 });
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const p = paramsSchema.safeParse(await params);
+  if (!p.success) {
+    return {
+      title: "無効なプロジェクト",
+      description: `プロジェクトIDが正しくありません。`,
+    };
+  }
+  const { id } = p.data;
+
+  const project = await getProject(id);
+  if (!project) {
+    return {
+      title: "無効なプロジェクト",
+      description: `指定されたプロジェクトは存在しません。`,
+    };
+  }
+
+  return {
+    title: `${project.title}`,
+    description: `DevLinkプロジェクト ${project.title}の詳細ページです。`,
+  };
+}
+
 interface ProjectDetailPageProps {
   params: Promise<{ id: string }>;
   tabs: React.ReactNode;

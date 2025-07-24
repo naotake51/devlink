@@ -8,12 +8,40 @@ import Link from "next/link";
 import { z } from "zod";
 import { UserAvatar } from "../../_components/user-avatar";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) {
+  const p = paramsSchema.safeParse(await params);
+  if (!p.success) {
+    return {
+      title: "無効なユーザー",
+      description: `ユーザーIDが正しくありません。`,
+    };
+  }
+  const { userId } = p.data;
+
+  const profile = await getProfileWithProjects(userId);
+  if (!profile) {
+    return {
+      title: "無効なユーザー",
+      description: `指定されたユーザーは存在しません。`,
+    };
+  }
+
+  return {
+    title: `${profile.displayName}のプロフィール`,
+    description: `DevLinkユーザー ${profile.displayName}のプロフィールページです。`,
+  };
+}
+
 const paramsSchema = z.object({
   userId: z.string().uuid(),
 });
 
 interface ProjectDetailPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ userId: string }>;
 }
 
 /**

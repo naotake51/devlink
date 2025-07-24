@@ -1,6 +1,15 @@
 import { ChevronLeftIcon } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { NewProjectForm } from "./_components/new-project-form";
+
+/**
+ * @private
+ */
+export const metadata: Metadata = {
+  title: "新規プロジェクト作成",
+  description: "新しいプロジェクトを作成して、他のユーザーを募集しましょう。",
+};
 
 const NewProjectPage = () => {
   return (

@@ -1,8 +1,17 @@
 import { ErrorMessage } from "@/components/error-message";
 import { ChevronLeftIcon } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { z } from "zod";
 import { EditProject } from "./_components/edit-project";
+
+/**
+ * @private
+ */
+export const metadata: Metadata = {
+  title: "プロジェクト編集",
+  description: "プロジェクトを編集して、詳細情報を更新しましょう。",
+};
 
 const paramsSchema = z.object({
   id: z.string().uuid(),
