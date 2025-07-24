@@ -34,5 +34,5 @@ export const createProject = actionClient
       });
     });
 
-    redirect("/my");
+    redirect("/");
   });

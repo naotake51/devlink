@@ -72,7 +72,7 @@ export function ErrorMessage({
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
           <Button asChild size="lg" variant="outline">
-            <Link href="/my">
+            <Link href="/">
               <Home className="w-4 h-4 mr-2" />
               ホームに戻る
             </Link>

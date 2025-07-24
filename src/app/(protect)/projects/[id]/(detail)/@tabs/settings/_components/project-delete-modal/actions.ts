@@ -38,5 +38,5 @@ export const deleteProject = actionClient
 
     await prisma.project.delete({ where: { id: projectId } });
 
-    redirect("/my");
+    redirect("/");
   });

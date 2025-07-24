@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const NewProjectPage = () => {
   return (
     <div>
-      <Link href="/my">
+      <Link href="/">
         <p className="text-md font-bold mb-4 flex items-center gap-2">
           <ChevronLeftIcon />
           マイページへ戻る

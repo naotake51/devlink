@@ -18,7 +18,7 @@ import "server-only";
 const menuItems = [
   {
     name: "マイページ",
-    url: "/my",
+    url: "/",
     icon: () => <UserIcon />,
   },
   {
